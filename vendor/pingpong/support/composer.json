@@ -1,0 +1,26 @@
+{
+  "name": "pingpong/support",
+  "description": "Support Component of Pingpong Sky Package",
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Pingpong Labs",
+      "email": "pingpong.labs@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/filesystem": "5.1.*",
+    "illuminate/support": "5.1.*",
+    "erusev/parsedown-extra": "0.7.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pingpong\\Support\\": ""
+    },
+    "files": [
+      "helpers.php"
+    ]
+  },
+  "minimum-stability": "stable"
+}

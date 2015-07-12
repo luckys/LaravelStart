@@ -1,0 +1,10 @@
+<?php $NAMESPACE$
+
+use $ROOT_NAMESPACE$Http\Requests;
+use $ROOT_NAMESPACE$Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class $CLASS$ extends Controller
+{
+    //  
+}
