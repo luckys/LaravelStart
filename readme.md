@@ -1,27 +1,19 @@
-## Laravel PHP Framework
+## LaravelStart
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+LaravelStart es una aplicación base de donde partir para comenzar un proyecto nuevo con Laravel 5.1, esta dividida en módulos y contiene el módulo de autenticación y dashboard, con lo cual ya se tendria implementado el acceso por parte de usuarios, estos tiene roles y a su vez los roles tienen diferentes permisos, actualmente contiene un único rol que es el de administrador.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Librerias integradas:
+- `Pinpong Modules` para separar la aplicación por módulos: (https://sky.pingpong-labs.com/docs/2.1/modules).
+- `Entrust` para el módulo de autenticación: (https://github.com/Zizaco/entrust).
+- `Laravel-Dompdf` para los reportes en pdf: (https://github.com/barryvdh/laravel-dompdf).
+- `Framework Bootstrap` para el frontend de la aplicación.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+Instalación: 
+Descargar o clonar el proyecto, crear el archivo `".env"` y poner información necesaria sobre la base de datos, por último teclear el comando `"php artisan app:install"` dentro de la carpeta del proyecto para realizar las migraciones de la base de datos.
 
-## Official Documentation
-
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+```
+Acceso al Sistema:
+Role Admin:
+email: admin@demo.com
+password: admin123
+```
