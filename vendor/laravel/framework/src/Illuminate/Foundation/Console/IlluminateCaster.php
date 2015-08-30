@@ -46,8 +46,8 @@ class IlluminateCaster
             try {
                 $val = $app->$property();
 
-                if (!is_null($val)) {
-                    $results[Caster::PREFIX_VIRTUAL . $property] = $val;
+                if (! is_null($val)) {
+                    $results[Caster::PREFIX_VIRTUAL.$property] = $val;
                 }
             } catch (Exception $e) {
                 //
@@ -60,7 +60,7 @@ class IlluminateCaster
     /**
      * Get an array representing the properties of a collection.
      *
-     * @param  \Illuminate\Support\Collection  $value
+     * @param  \Illuminate\Support\Collection  $collection
      * @return array
      */
     public static function castCollection(Collection $collection)
