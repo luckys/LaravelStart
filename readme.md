@@ -1,4 +1,4 @@
-## LaravelStart
+## LaravelStart 1.0
 
 LaravelStart es una aplicación base de donde partir para comenzar un proyecto nuevo con Laravel 5.1, esta dividida en módulos y contiene el módulo de autenticación y dashboard, con lo cual ya se tendria implementado el acceso por parte de usuarios, estos tiene roles y a su vez los roles tienen diferentes permisos, actualmente contiene un único rol que es el de administrador.
 
