@@ -53,6 +53,15 @@ class PSR0LocatorSpec extends ObjectBehavior
         $this->getFullSrcPath()->shouldReturn(dirname(__DIR__).DIRECTORY_SEPARATOR);
     }
 
+    function it_should_not_have_backslash_on_missing_prefix()
+    {
+        $this->beConstructedWith('Cust\Ns', '', dirname(__DIR__), __DIR__);
+
+        $this->getSpecNamespace()->shouldReturn('Cust\Ns\\');
+
+        $this->getFullSpecPath()->shouldReturn(__DIR__.DIRECTORY_SEPARATOR.'Cust'.DIRECTORY_SEPARATOR.'Ns'.DIRECTORY_SEPARATOR);
+    }
+
     function it_generates_fullSpecPath_from_specPath_plus_namespace()
     {
         $this->beConstructedWith('C\N', 'spec', dirname(__DIR__), __DIR__);
@@ -489,6 +498,27 @@ class PSR0LocatorSpec extends ObjectBehavior
         );
 
         $this->shouldThrow($exception)->during('__construct', array('p\pf\N\S', 'spec', $this->srcPath, $this->specPath, null, 'wrong\prefix'));
+    }
+
+    function it_supports_psr0_namespace_queries(Filesystem $filesystem)
+    {
+        $this->beConstructedWith('', 'spec', $this->srcPath, $this->specPath, $filesystem);
+        $filesystem->pathExists($this->specPath.'/spec/PhpSpec/Console/ApplicationSpec.php')->willReturn(true);
+        $this->supportsQuery('PhpSpec\\Console\\Application')->shouldReturn(true);
+    }
+
+    function it_supports_psr0_namespace_queries_with_a_namespace_prefix(Filesystem $filesystem)
+    {
+        $this->beConstructedWith('PhpSpec', 'spec', $this->srcPath, $this->specPath, $filesystem);
+        $filesystem->pathExists($this->specPath.'/spec/PhpSpec/Console/ApplicationSpec.php')->willReturn(true);
+        $this->supportsQuery('Console\\Application')->shouldReturn(true);
+    }
+
+    function it_supports_psr4_namespace_queries(Filesystem $filesystem)
+    {
+        $this->beConstructedWith('Test\\Namespace\\PhpSpec', 'spec', $this->srcPath, $this->specPath, $filesystem, 'Test\\Namespace');
+        $filesystem->pathExists($this->specPath.'/spec/PhpSpec/Console/ApplicationSpec.php')->willReturn(true);
+        $this->supportsQuery('Test\\Namespace\\PhpSpec\\Console\\Application')->shouldReturn(true);
     }
 
     private function convert_to_path($path)

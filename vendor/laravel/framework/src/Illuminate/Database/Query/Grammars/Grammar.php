@@ -56,7 +56,7 @@ class Grammar extends BaseGrammar
             // To compile the query, we'll spin through each component of the query and
             // see if that component exists. If it does we'll just call the compiler
             // function for the component which is responsible for making the SQL.
-            if (!is_null($query->$component)) {
+            if (! is_null($query->$component)) {
                 $method = 'compile'.ucfirst($component);
 
                 $sql[$component] = $this->$method($query, $query->$component);
@@ -92,14 +92,14 @@ class Grammar extends BaseGrammar
      *
      * @param  \Illuminate\Database\Query\Builder  $query
      * @param  array  $columns
-     * @return string
+     * @return string|null
      */
     protected function compileColumns(Builder $query, $columns)
     {
         // If the query is actually performing an aggregating select, we will let that
         // compiler handle the building of the select clauses, as it will need some
         // more syntax that is best handled by that function to keep things neat.
-        if (!is_null($query->aggregate)) {
+        if (! is_null($query->aggregate)) {
             return;
         }
 
@@ -131,8 +131,6 @@ class Grammar extends BaseGrammar
     {
         $sql = [];
 
-        $query->setBindings([], 'join');
-
         foreach ($joins as $join) {
             $table = $this->wrapTable($join->table);
 
@@ -143,10 +141,6 @@ class Grammar extends BaseGrammar
 
             foreach ($join->clauses as $clause) {
                 $clauses[] = $this->compileJoinConstraint($clause);
-            }
-
-            foreach ($join->bindings as $binding) {
-                $query->addBinding($binding, 'join');
             }
 
             // Once we have constructed the clauses, we'll need to take the boolean connector
@@ -170,16 +164,20 @@ class Grammar extends BaseGrammar
     /**
      * Create a join clause constraint segment.
      *
-     * @param  array   $clause
+     * @param  array  $clause
      * @return string
      */
     protected function compileJoinConstraint(array $clause)
     {
+        if ($clause['nested']) {
+            return $this->compileNestedJoinConstraint($clause);
+        }
+
         $first = $this->wrap($clause['first']);
 
         if ($clause['where']) {
             if ($clause['operator'] === 'in' || $clause['operator'] === 'not in') {
-                $second = '('.join(', ', array_fill(0, $clause['second'], '?')).')';
+                $second = '('.implode(', ', array_fill(0, $clause['second'], '?')).')';
             } else {
                 $second = '?';
             }
@@ -188,6 +186,27 @@ class Grammar extends BaseGrammar
         }
 
         return "{$clause['boolean']} $first {$clause['operator']} $second";
+    }
+
+    /**
+     * Create a nested join clause constraint segment.
+     *
+     * @param  array  $clause
+     * @return string
+     */
+    protected function compileNestedJoinConstraint(array $clause)
+    {
+        $clauses = [];
+
+        foreach ($clause['join']->clauses as $nestedClause) {
+            $clauses[] = $this->compileJoinConstraint($nestedClause);
+        }
+
+        $clauses[0] = $this->removeLeadingBoolean($clauses[0]);
+
+        $clauses = implode(' ', $clauses);
+
+        return "{$clause['boolean']} ({$clauses})";
     }
 
     /**
@@ -612,6 +631,19 @@ class Grammar extends BaseGrammar
     }
 
     /**
+     * Compile an exists statement into SQL.
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     * @return string
+     */
+    public function compileExists(Builder $query)
+    {
+        $select = $this->compileSelect($query);
+
+        return "select exists($select) as {$this->wrap('exists')}";
+    }
+
+    /**
      * Compile an insert statement into SQL.
      *
      * @param  \Illuminate\Database\Query\Builder  $query
@@ -625,7 +657,7 @@ class Grammar extends BaseGrammar
         // basic routine regardless of an amount of records given to us to insert.
         $table = $this->wrapTable($query->from);
 
-        if (!is_array(reset($values))) {
+        if (! is_array(reset($values))) {
             $values = [$values];
         }
 
@@ -736,6 +768,38 @@ class Grammar extends BaseGrammar
     }
 
     /**
+     * Determine if the grammar supports savepoints.
+     *
+     * @return bool
+     */
+    public function supportsSavepoints()
+    {
+        return true;
+    }
+
+    /**
+     * Compile the SQL statement to define a savepoint.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    public function compileSavepoint($name)
+    {
+        return 'SAVEPOINT '.$name;
+    }
+
+    /**
+     * Compile the SQL statement to execute a savepoint rollback.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    public function compileSavepointRollBack($name)
+    {
+        return 'ROLLBACK TO SAVEPOINT '.$name;
+    }
+
+    /**
      * Concatenate an array of segments, removing empties.
      *
      * @param  array   $segments
@@ -756,6 +820,6 @@ class Grammar extends BaseGrammar
      */
     protected function removeLeadingBoolean($value)
     {
-        return preg_replace('/and |or /', '', $value, 1);
+        return preg_replace('/and |or /i', '', $value, 1);
     }
 }

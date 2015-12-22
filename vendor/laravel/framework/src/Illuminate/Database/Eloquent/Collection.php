@@ -104,7 +104,9 @@ class Collection extends BaseCollection
      */
     public function modelKeys()
     {
-        return array_map(function ($m) { return $m->getKey(); }, $this->items);
+        return array_map(function ($m) {
+            return $m->getKey();
+        }, $this->items);
     }
 
     /**
@@ -137,7 +139,7 @@ class Collection extends BaseCollection
         $dictionary = $this->getDictionary($items);
 
         foreach ($this->items as $item) {
-            if (!isset($dictionary[$item->getKey()])) {
+            if (! isset($dictionary[$item->getKey()])) {
                 $diff->add($item);
             }
         }
@@ -174,7 +176,7 @@ class Collection extends BaseCollection
      */
     public function unique($key = null)
     {
-        if (!is_null($key)) {
+        if (! is_null($key)) {
             return parent::unique($key);
         }
 
@@ -202,9 +204,24 @@ class Collection extends BaseCollection
      */
     public function except($keys)
     {
-        $dictionary = array_except($this->getDictionary(), $keys);
+        $dictionary = Arr::except($this->getDictionary(), $keys);
 
         return new static(array_values($dictionary));
+    }
+
+    /**
+     * Make the given, typically hidden, attributes visible across the entire collection.
+     *
+     * @param  array|string  $attributes
+     * @return $this
+     */
+    public function withHidden($attributes)
+    {
+        $this->each(function ($model) use ($attributes) {
+            $model->withHidden($attributes);
+        });
+
+        return $this;
     }
 
     /**

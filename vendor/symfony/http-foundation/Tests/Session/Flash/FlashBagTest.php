@@ -133,13 +133,10 @@ class FlashBagTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Symfony\Component\HttpFoundation\Session\Flash\FlashBag::getIterator
      * @group legacy
      */
     public function testLegacyGetIterator()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $flashes = array('hello' => 'world', 'beep' => 'boop', 'notice' => 'nope');
         foreach ($flashes as $key => $val) {
             $this->bag->set($key, $val);

@@ -15,7 +15,6 @@ namespace PhpSpec\Wrapper\Subject;
 
 use PhpSpec\Wrapper\Unwrapper;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
-use PhpSpec\Wrapper\Subject;
 use PhpSpec\Exception\Wrapper\SubjectException;
 use PhpSpec\Exception\Fracture\InterfaceNotImplementedException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -27,11 +26,11 @@ class SubjectWithArrayAccess
      */
     private $caller;
     /**
-     * @var \PhpSpec\Formatter\Presenter\PresenterInterface
+     * @var PresenterInterface
      */
     private $presenter;
     /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
+     * @var EventDispatcherInterface
      */
     private $dispatcher;
 

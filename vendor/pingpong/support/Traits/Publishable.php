@@ -2,6 +2,8 @@
 
 namespace Pingpong\Support\Traits;
 
+use Carbon\Carbon;
+
 trait Publishable
 {
     /**
@@ -36,6 +38,38 @@ trait Publishable
     public function published()
     {
         return !$this->drafted();
+    }
+
+    /**
+     * Determine whether the current model/data is unpublished.
+     * 
+     * @return bool
+     */
+    public function unpublished()
+    {
+        return $this->drafted();
+    }
+
+    /**
+     * Unpublish current data.
+     * 
+     * @return void
+     */
+    public function unpublish()
+    {
+        $this->{self::PUBLISHED_AT} = null;
+        $this->save();
+    }
+
+    /**
+     * Publish current data.
+     * 
+     * @return void
+     */
+    public function publish()
+    {
+        $this->{self::PUBLISHED_AT} = Carbon::now();
+        $this->save();
     }
 
     /**

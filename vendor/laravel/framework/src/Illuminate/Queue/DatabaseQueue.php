@@ -62,7 +62,7 @@ class DatabaseQueue extends Queue implements QueueContract
      * @param  string  $job
      * @param  mixed   $data
      * @param  string  $queue
-     * @return void
+     * @return mixed
      */
     public function push($job, $data = '', $queue = null)
     {
@@ -125,7 +125,7 @@ class DatabaseQueue extends Queue implements QueueContract
      * @param  string  $queue
      * @param  \StdClass  $job
      * @param  int  $delay
-     * @return void
+     * @return mixed
      */
     public function release($queue, $job, $delay)
     {
@@ -160,7 +160,7 @@ class DatabaseQueue extends Queue implements QueueContract
     {
         $queue = $this->getQueue($queue);
 
-        if (!is_null($this->expire)) {
+        if (! is_null($this->expire)) {
             $this->releaseJobsThatHaveBeenReservedTooLong($queue);
         }
 

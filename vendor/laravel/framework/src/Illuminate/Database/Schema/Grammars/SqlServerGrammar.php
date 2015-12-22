@@ -482,6 +482,10 @@ class SqlServerGrammar extends Grammar
      */
     protected function typeTimestamp(Fluent $column)
     {
+        if ($column->useCurrent) {
+            return 'datetime default CURRENT_TIMESTAMP';
+        }
+
         return 'datetime';
     }
 
@@ -495,6 +499,10 @@ class SqlServerGrammar extends Grammar
      */
     protected function typeTimestampTz(Fluent $column)
     {
+        if ($column->useCurrent) {
+            return 'datetimeoffset(0) default CURRENT_TIMESTAMP';
+        }
+
         return 'datetimeoffset(0)';
     }
 
@@ -507,6 +515,17 @@ class SqlServerGrammar extends Grammar
     protected function typeBinary(Fluent $column)
     {
         return 'varbinary(max)';
+    }
+
+    /**
+     * Create the column definition for a uuid type.
+     *
+     * @param  \Illuminate\Support\Fluent  $column
+     * @return string
+     */
+    protected function typeUuid(Fluent $column)
+    {
+        return 'uniqueidentifier';
     }
 
     /**
@@ -530,7 +549,7 @@ class SqlServerGrammar extends Grammar
      */
     protected function modifyDefault(Blueprint $blueprint, Fluent $column)
     {
-        if (!is_null($column->default)) {
+        if (! is_null($column->default)) {
             return ' default '.$this->getDefaultValue($column->default);
         }
     }

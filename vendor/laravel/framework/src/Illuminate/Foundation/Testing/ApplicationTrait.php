@@ -53,7 +53,7 @@ trait ApplicationTrait
      *
      * These events will be mocked, so that handlers will not actually be executed.
      *
-     * @param  array|dynamic  $events
+     * @param  array|mixed  $events
      * @return $this
      */
     public function expectsEvents($events)
@@ -106,7 +106,7 @@ trait ApplicationTrait
      *
      * These jobs will be mocked, so that handlers will not actually be executed.
      *
-     * @param  array|dynamic  $jobs
+     * @param  array|mixed  $jobs
      * @return $this
      */
     protected function expectsJobs($jobs)
@@ -162,7 +162,7 @@ trait ApplicationTrait
      */
     protected function startSession()
     {
-        if (!$this->app['session']->isStarted()) {
+        if (! $this->app['session']->isStarted()) {
             $this->app['session']->start();
         }
     }
@@ -177,6 +177,18 @@ trait ApplicationTrait
         $this->startSession();
 
         $this->app['session']->flush();
+    }
+
+    /**
+     * Disable middleware for the test.
+     *
+     * @return $this
+     */
+    public function withoutMiddleware()
+    {
+        $this->app->instance('middleware.disable', true);
+
+        return $this;
     }
 
     /**
@@ -249,6 +261,19 @@ trait ApplicationTrait
      * @param  string  $connection
      * @return $this
      */
+    protected function dontSeeInDatabase($table, array $data, $connection = null)
+    {
+        return $this->notSeeInDatabase($table, $data, $connection);
+    }
+
+    /**
+     * Assert that a given where condition does not exist in the database.
+     *
+     * @param  string  $table
+     * @param  array  $data
+     * @param  string  $connection
+     * @return $this
+     */
     protected function notSeeInDatabase($table, array $data, $connection = null)
     {
         $database = $this->app->make('db');
@@ -278,8 +303,8 @@ trait ApplicationTrait
     /**
      * Call artisan command and return code.
      *
-     * @param string  $command
-     * @param array   $parameters
+     * @param  string  $command
+     * @param  array  $parameters
      * @return int
      */
     public function artisan($command, $parameters = [])

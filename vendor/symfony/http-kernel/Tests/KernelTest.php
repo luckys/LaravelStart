@@ -12,6 +12,7 @@
 namespace Symfony\Component\HttpKernel\Tests;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Config\EnvParametersResource;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -344,8 +345,6 @@ EOF;
 
     protected function getKernelMockForIsClassInActiveBundleTest()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $bundle = new FooBarBundle();
 
         $kernel = $this->getKernel(array('getBundles'));
@@ -767,7 +766,7 @@ EOF;
     }
 
     /**
-     * Returns a mock for the BundleInterface
+     * Returns a mock for the BundleInterface.
      *
      * @return BundleInterface
      */

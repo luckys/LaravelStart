@@ -91,7 +91,7 @@ class Store implements SessionInterface
     {
         $this->loadSession();
 
-        if (!$this->has('_token')) {
+        if (! $this->has('_token')) {
             $this->regenerateToken();
         }
 
@@ -169,7 +169,7 @@ class Store implements SessionInterface
      */
     public function setId($id)
     {
-        if (!$this->isValidId($id)) {
+        if (! $this->isValidId($id)) {
             $id = $this->generateSessionId();
         }
 
@@ -294,9 +294,7 @@ class Store implements SessionInterface
      */
     public function ageFlashData()
     {
-        foreach ($this->get('flash.old', []) as $old) {
-            $this->forget($old);
-        }
+        $this->forget($this->get('flash.old', []));
 
         $this->put('flash.old', $this->get('flash.new', []));
 
@@ -308,7 +306,7 @@ class Store implements SessionInterface
      */
     public function has($name)
     {
-        return !is_null($this->get($name));
+        return ! is_null($this->get($name));
     }
 
     /**
@@ -341,7 +339,7 @@ class Store implements SessionInterface
     {
         $old = $this->getOldInput($key);
 
-        return is_null($key) ? count($old) > 0 : !is_null($old);
+        return is_null($key) ? count($old) > 0 : ! is_null($old);
     }
 
     /**
@@ -373,12 +371,12 @@ class Store implements SessionInterface
      * Put a key / value pair or array of key / value pairs in the session.
      *
      * @param  string|array  $key
-     * @param  mixed|null       $value
+     * @param  mixed       $value
      * @return void
      */
     public function put($key, $value = null)
     {
-        if (!is_array($key)) {
+        if (! is_array($key)) {
             $key = [$key => $value];
         }
 
@@ -417,6 +415,21 @@ class Store implements SessionInterface
         $this->push('flash.new', $key);
 
         $this->removeFromOldFlashData([$key]);
+    }
+
+    /**
+     * Flash a key / value pair to the session
+     * for immediate use.
+     *
+     * @param  string $key
+     * @param  mixed $value
+     * @return void
+     */
+    public function now($key, $value)
+    {
+        $this->put($key, $value);
+
+        $this->push('flash.old', $key);
     }
 
     /**
@@ -506,14 +519,14 @@ class Store implements SessionInterface
     }
 
     /**
-     * Remove an item from the session.
+     * Remove one or many items from the session.
      *
-     * @param  string  $key
+     * @param  string|array  $keys
      * @return void
      */
-    public function forget($key)
+    public function forget($keys)
     {
-        Arr::forget($this->attributes, $key);
+        Arr::forget($this->attributes, $keys);
     }
 
     /**

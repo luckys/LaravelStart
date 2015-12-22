@@ -29,7 +29,7 @@ class CliDumperTest extends VarDumperTestCase
         $cloner = new VarCloner();
         $cloner->addCasters(array(
             ':stream' => function ($res, $a) {
-                unset($a['uri']);
+                unset($a['uri'], $a['wrapper_data']);
 
                 return $a;
             },
@@ -41,21 +41,21 @@ class CliDumperTest extends VarDumperTestCase
         $out = ob_get_clean();
         $out = preg_replace('/[ \t]+$/m', '', $out);
         $intMax = PHP_INT_MAX;
-        $res1 = (int) $var['res'];
-        $res2 = (int) $var[8];
+        $res = (int) $var['res'];
         $closure54 = '';
+        $r = defined('HHVM_VERSION') ? '' : '#%d';
 
         if (PHP_VERSION_ID >= 50400) {
             $closure54 = <<<EOTXT
 
     class: "Symfony\Component\VarDumper\Tests\CliDumperTest"
-    this: Symfony\Component\VarDumper\Tests\CliDumperTest {#%d …}
+    this: Symfony\Component\VarDumper\Tests\CliDumperTest {{$r} …}
 EOTXT;
         }
 
         $this->assertStringMatchesFormat(
             <<<EOTXT
-array:25 [
+array:24 [
   "number" => 1
   0 => &1 null
   "const" => 1.1
@@ -65,10 +65,10 @@ array:25 [
   4 => INF
   5 => -INF
   6 => {$intMax}
-  "str" => "déjà"
-  7 => b"é@"
+  "str" => "déjà\\n"
+  7 => b"é\\x00"
   "[]" => []
-  "res" => :stream {@{$res1}
+  "res" => stream resource {@{$res}
     wrapper_type: "plainfile"
     stream_type: "STDIO"
     mode: "r"
@@ -79,12 +79,11 @@ array:25 [
     eof: false
     options: []
   }
-  8 => :Unknown {@{$res2}}
   "obj" => Symfony\Component\VarDumper\Tests\Fixture\DumbFoo {#%d
     +foo: "foo"
     +"bar": "bar"
   }
-  "closure" => Closure {#%d{$closure54}
+  "closure" => Closure {{$r}{$closure54}
     parameters: array:2 [
       "\$a" => []
       "&\$b" => array:2 [
@@ -102,7 +101,7 @@ array:25 [
   "recurs" => &4 array:1 [
     0 => &4 array:1 [&4]
   ]
-  9 => &1 null
+  8 => &1 null
   "sobj" => Symfony\Component\VarDumper\Tests\Fixture\DumbFoo {#%d}
   "snobj" => &3 {#%d}
   "snobj2" => {#%d}
@@ -116,25 +115,53 @@ EOTXT
         );
     }
 
+    /**
+     * @requires extension xml
+     */
     public function testXmlResource()
     {
-        if (!extension_loaded('xml')) {
-            $this->markTestSkipped('xml extension is required');
-        }
-
         $var = xml_parser_create();
 
-        $this->assertDumpEquals(
+        $this->assertDumpMatchesFormat(
             <<<EOTXT
-:xml {
-  current_byte_index: 0
-  current_column_number: 1
+xml resource {
+  current_byte_index: %i
+  current_column_number: %i
   current_line_number: 1
   error_code: XML_ERROR_NONE
 }
 EOTXT
             ,
             $var
+        );
+    }
+
+    public function testClosedResource()
+    {
+        if (defined('HHVM_VERSION') && HHVM_VERSION_ID < 30600) {
+            $this->markTestSkipped();
+        }
+
+        $var = fopen(__FILE__, 'r');
+        fclose($var);
+
+        $dumper = new CliDumper('php://output');
+        $dumper->setColors(false);
+        $cloner = new VarCloner();
+        $data = $cloner->cloneVar($var);
+
+        ob_start();
+        $dumper->dump($data);
+        $out = ob_get_clean();
+        $res = (int) $var;
+
+        $this->assertStringMatchesFormat(
+            <<<EOTXT
+Unknown resource @{$res}
+
+EOTXT
+            ,
+            $out
         );
     }
 
@@ -145,6 +172,13 @@ EOTXT
         $dumper = new CliDumper();
         $dumper->setColors(false);
         $cloner = new VarCloner();
+        $cloner->addCasters(array(
+            ':stream' => function ($res, $a) {
+                unset($a['wrapper_data']);
+
+                return $a;
+            },
+        ));
         $cloner->addCasters(array(
             ':stream' => function () {
                 throw new \Exception('Foobar');
@@ -159,12 +193,13 @@ EOTXT
         rewind($out);
         $out = stream_get_contents($out);
 
+        $r = defined('HHVM_VERSION') ? '' : '#%d';
         $this->assertStringMatchesFormat(
             <<<EOTXT
-:stream {@{$ref}
+stream resource {@{$ref}
   wrapper_type: "PHP"
   stream_type: "MEMORY"
-  mode: "w+b"
+  mode: "%s+b"
   unread_bytes: 0
   seekable: true
   uri: "php://memory"
@@ -172,11 +207,11 @@ EOTXT
   blocked: true
   eof: false
   options: []
-  ⚠: Symfony\Component\VarDumper\Exception\ThrowingCasterException {#%d
+  ⚠: Symfony\Component\VarDumper\Exception\ThrowingCasterException {{$r}
     #message: "Unexpected Exception thrown from a caster: Foobar"
     trace: array:1 [
       0 => array:2 [
-        "call" => "%s{closure}()"
+        "call" => "%slosure%s()"
         "file" => "{$file}:{$line}"
       ]
     ]
@@ -192,7 +227,7 @@ EOTXT
     public function testRefsInProperties()
     {
         $var = (object) array('foo' => 'foo');
-        $var->bar =& $var->foo;
+        $var->bar = &$var->foo;
 
         $dumper = new CliDumper();
         $dumper->setColors(false);
@@ -204,9 +239,10 @@ EOTXT
         rewind($out);
         $out = stream_get_contents($out);
 
+        $r = defined('HHVM_VERSION') ? '' : '#%d';
         $this->assertStringMatchesFormat(
             <<<EOTXT
-{#%d
+{{$r}
   +"foo": &1 "foo"
   +"bar": &1 "foo"
 }
@@ -220,13 +256,10 @@ EOTXT
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
+     * @requires PHP 5.6
      */
     public function testSpecialVars56()
     {
-        if (PHP_VERSION_ID < 50600) {
-            $this->markTestSkipped('PHP 5.6 is required');
-        }
-
         $var = $this->getSpecialVars();
 
         $this->assertDumpEquals(
@@ -343,7 +376,7 @@ EOTXT
 
         $var = function &() {
             $var = array();
-            $var[] =& $var;
+            $var[] = &$var;
 
             return $var;
         };

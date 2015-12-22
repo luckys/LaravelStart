@@ -48,6 +48,13 @@ class Blueprint
     public $collation;
 
     /**
+     * Whether to make the table temporary.
+     *
+     * @var bool
+     */
+    public $temporary = false;
+
+    /**
      * Create a new schema blueprint.
      *
      * @param  string  $table
@@ -58,7 +65,7 @@ class Blueprint
     {
         $this->table = $table;
 
-        if (!is_null($callback)) {
+        if (! is_null($callback)) {
             $callback($this);
         }
     }
@@ -97,7 +104,7 @@ class Blueprint
             $method = 'compile'.ucfirst($command->name);
 
             if (method_exists($grammar, $method)) {
-                if (!is_null($sql = $grammar->$method($this, $command, $connection))) {
+                if (! is_null($sql = $grammar->$method($this, $command, $connection))) {
                     $statements = array_merge($statements, (array) $sql);
                 }
             }
@@ -113,11 +120,11 @@ class Blueprint
      */
     protected function addImpliedCommands()
     {
-        if (count($this->getAddedColumns()) > 0 && !$this->creating()) {
+        if (count($this->getAddedColumns()) > 0 && ! $this->creating()) {
             array_unshift($this->commands, $this->createCommand('add'));
         }
 
-        if (count($this->getChangedColumns()) > 0 && !$this->creating()) {
+        if (count($this->getChangedColumns()) > 0 && ! $this->creating()) {
             array_unshift($this->commands, $this->createCommand('change'));
         }
 
@@ -181,6 +188,16 @@ class Blueprint
     }
 
     /**
+     * Indicate that the table needs to be temporary.
+     *
+     * @return void
+     */
+    public function temporary()
+    {
+        $this->temporary = true;
+    }
+
+    /**
      * Indicate that the table should be dropped.
      *
      * @return \Illuminate\Support\Fluent
@@ -203,7 +220,7 @@ class Blueprint
     /**
      * Indicate that the given columns should be dropped.
      *
-     * @param  string|array  $columns
+     * @param  array|mixed  $columns
      * @return \Illuminate\Support\Fluent
      */
     public function dropColumn($columns)
@@ -378,7 +395,7 @@ class Blueprint
     {
         return $this->unsignedInteger($column, true);
     }
-    
+
     /**
      * Create a new auto-incrementing small integer (2-byte) column on the table.
      *
@@ -535,7 +552,7 @@ class Blueprint
     }
 
     /**
-     * Create a new unsigned small integer (2-byte) column on the table.
+     * Create a new unsigned tiny integer (1-byte) column on the table.
      *
      * @param  string  $column
      * @param  bool  $autoIncrement
@@ -813,6 +830,17 @@ class Blueprint
     }
 
     /**
+     * Create a new uuid column on the table.
+     *
+     * @param  string  $column
+     * @return \Illuminate\Support\Fluent
+     */
+    public function uuid($column)
+    {
+        return $this->addColumn('uuid', $column);
+    }
+
+    /**
      * Add the proper columns for a polymorphic table.
      *
      * @param  string  $name
@@ -994,7 +1022,7 @@ class Blueprint
     public function getAddedColumns()
     {
         return array_filter($this->columns, function ($column) {
-            return !$column->change;
+            return ! $column->change;
         });
     }
 
@@ -1006,7 +1034,7 @@ class Blueprint
     public function getChangedColumns()
     {
         return array_filter($this->columns, function ($column) {
-            return !!$column->change;
+            return (bool) $column->change;
         });
     }
 }

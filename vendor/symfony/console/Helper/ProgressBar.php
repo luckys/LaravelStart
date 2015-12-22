@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Console\Helper;
 
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -26,7 +27,8 @@ class ProgressBar
     private $barChar;
     private $emptyBarChar = '-';
     private $progressChar = '>';
-    private $format = null;
+    private $format;
+    private $internalFormat;
     private $redrawFreq = 1;
 
     /**
@@ -54,6 +56,10 @@ class ProgressBar
      */
     public function __construct(OutputInterface $output, $max = 0)
     {
+        if ($output instanceof ConsoleOutputInterface) {
+            $output = $output->getErrorOutput();
+        }
+
         $this->output = $output;
         $this->setMaxSteps($max);
 
@@ -66,8 +72,6 @@ class ProgressBar
                 $this->setRedrawFrequency($max / 10);
             }
         }
-
-        $this->setFormat($this->determineBestFormat());
 
         $this->startTime = time();
     }
@@ -305,16 +309,8 @@ class ProgressBar
      */
     public function setFormat($format)
     {
-        // try to use the _nomax variant if available
-        if (!$this->max && null !== self::getFormatDefinition($format.'_nomax')) {
-            $this->format = self::getFormatDefinition($format.'_nomax');
-        } elseif (null !== self::getFormatDefinition($format)) {
-            $this->format = self::getFormatDefinition($format);
-        } else {
-            $this->format = $format;
-        }
-
-        $this->formatLineCount = substr_count($this->format, "\n");
+        $this->format = null;
+        $this->internalFormat = $format;
     }
 
     /**
@@ -374,7 +370,7 @@ class ProgressBar
     }
 
     /**
-     * Sets whether to overwrite the progressbar, false for new line
+     * Sets whether to overwrite the progressbar, false for new line.
      *
      * @param bool $overwrite
      */
@@ -401,8 +397,8 @@ class ProgressBar
             $this->max = $step;
         }
 
-        $prevPeriod = intval($this->step / $this->redrawFreq);
-        $currPeriod = intval($step / $this->redrawFreq);
+        $prevPeriod = (int) ($this->step / $this->redrawFreq);
+        $currPeriod = (int) ($step / $this->redrawFreq);
         $this->step = $step;
         $this->percent = $this->max ? (float) $this->step / $this->max : 0;
         if ($prevPeriod !== $currPeriod || $this->max === $step) {
@@ -434,6 +430,10 @@ class ProgressBar
     {
         if (OutputInterface::VERBOSITY_QUIET === $this->output->getVerbosity()) {
             return;
+        }
+
+        if (null === $this->format) {
+            $this->setRealFormat($this->internalFormat ?: $this->determineBestFormat());
         }
 
         // these 3 variables can be removed in favor of using $this in the closure when support for PHP 5.3 will be dropped.
@@ -470,13 +470,36 @@ class ProgressBar
             return;
         }
 
+        if (null === $this->format) {
+            $this->setRealFormat($this->internalFormat ?: $this->determineBestFormat());
+        }
+
         $this->overwrite(str_repeat("\n", $this->formatLineCount));
+    }
+
+    /**
+     * Sets the progress bar format.
+     *
+     * @param string $format The format
+     */
+    private function setRealFormat($format)
+    {
+        // try to use the _nomax variant if available
+        if (!$this->max && null !== self::getFormatDefinition($format.'_nomax')) {
+            $this->format = self::getFormatDefinition($format.'_nomax');
+        } elseif (null !== self::getFormatDefinition($format)) {
+            $this->format = self::getFormatDefinition($format);
+        } else {
+            $this->format = $format;
+        }
+
+        $this->formatLineCount = substr_count($this->format, "\n");
     }
 
     /**
      * Sets the progress bar maximal steps.
      *
-     * @param int     The progress bar max steps
+     * @param int $max The progress bar max steps
      */
     private function setMaxSteps($max)
     {

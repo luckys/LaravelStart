@@ -59,7 +59,7 @@ class RedisQueue extends Queue implements QueueContract
      * @param  string  $job
      * @param  mixed   $data
      * @param  string  $queue
-     * @return void
+     * @return mixed
      */
     public function push($job, $data = '', $queue = null)
     {
@@ -88,7 +88,7 @@ class RedisQueue extends Queue implements QueueContract
      * @param  string  $job
      * @param  mixed   $data
      * @param  string  $queue
-     * @return void
+     * @return mixed
      */
     public function later($delay, $job, $data = '', $queue = null)
     {
@@ -129,13 +129,13 @@ class RedisQueue extends Queue implements QueueContract
 
         $queue = $this->getQueue($queue);
 
-        if (!is_null($this->expire)) {
+        if (! is_null($this->expire)) {
             $this->migrateAllExpiredJobs($queue);
         }
 
         $job = $this->getConnection()->lpop($queue);
 
-        if (!is_null($job)) {
+        if (! is_null($job)) {
             $this->getConnection()->zadd($queue.':reserved', $this->getTime() + $this->expire, $job);
 
             return new RedisJob($this->container, $this, $job, $original);

@@ -8,11 +8,13 @@ use ReflectionParameter;
 class MarshalException extends RuntimeException
 {
     /**
-     * Throw new a new exception.
+     * Throw a new exception.
      *
      * @param  string  $command
      * @param  \ReflectionParameter  $parameter
      * @return void
+     *
+     * @throws static
      */
     public static function whileMapping($command, ReflectionParameter $parameter)
     {

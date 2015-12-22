@@ -24,8 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
  * Cache provides HTTP caching.
  *
  * @author Fabien Potencier <fabien@symfony.com>
- *
- * @api
  */
 class HttpCache implements HttpKernelInterface, TerminableInterface
 {
@@ -156,11 +154,16 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
      * Gets the Surrogate instance.
      *
      * @throws \LogicException
+     *
      * @return SurrogateInterface A Surrogate instance
      */
     public function getSurrogate()
     {
-        return $this->getEsi();
+        if (!$this->surrogate instanceof Esi) {
+            throw new \LogicException('This instance of HttpCache was not set up to use ESI as surrogate handler. You must overwrite and use createSurrogate');
+        }
+
+        return $this->surrogate;
     }
 
     /**
@@ -176,17 +179,11 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     {
         @trigger_error('The '.__METHOD__.' method is deprecated since version 2.6 and will be removed in 3.0. Use the getSurrogate() method instead.', E_USER_DEPRECATED);
 
-        if (!$this->surrogate instanceof Esi) {
-            throw new \LogicException('This instance of HttpCache was not set up to use ESI as surrogate handler. You must overwrite and use createSurrogate');
-        }
-
-        return $this->surrogate;
+        return $this->getSurrogate();
     }
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      */
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
@@ -215,7 +212,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
 
         $this->restoreResponseBody($request, $response);
 
-        $response->setDate(new \DateTime(null, new \DateTimeZone('UTC')));
+        $response->setDate(\DateTime::createFromFormat('U', time(), new \DateTimeZone('UTC')));
 
         if (HttpKernelInterface::MASTER_REQUEST === $type && $this->options['debug']) {
             $response->headers->set('X-Symfony-Cache', $this->getLog());
@@ -238,8 +235,6 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @api
      */
     public function terminate(Request $request, Response $response)
     {

@@ -171,7 +171,7 @@ class Table
         if ($row instanceof TableSeparator) {
             $this->rows[] = $row;
 
-            return;
+            return $this;
         }
 
         if (!is_array($row)) {
@@ -245,7 +245,7 @@ class Table
         }
 
         $markup = $this->style->getCrossingChar();
-        for ($column = 0; $column < $count; $column++) {
+        for ($column = 0; $column < $count; ++$column) {
             $markup .= str_repeat($this->style->getHorizontalBorderChar(), $this->getColumnWidth($column)).$this->style->getCrossingChar();
         }
 
@@ -338,7 +338,7 @@ class Table
     private function buildTableRows($rows)
     {
         $unmergedRows = array();
-        for ($rowKey = 0; $rowKey < count($rows); $rowKey++) {
+        for ($rowKey = 0; $rowKey < count($rows); ++$rowKey) {
             $rows = $this->fillNextRows($rows, $rowKey);
 
             // Remove any new line breaks and replace it with a new line
@@ -376,7 +376,7 @@ class Table
      * fill rows that contains rowspan > 1.
      *
      * @param array $rows
-     * @param array $line
+     * @param int   $line
      *
      * @return array
      */
@@ -429,7 +429,7 @@ class Table
      * fill cells for a row that contains colspan > 1.
      *
      * @param array $row
-     * @param array $column
+     * @param int   $column
      *
      * @return array
      */

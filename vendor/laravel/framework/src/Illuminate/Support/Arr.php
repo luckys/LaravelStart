@@ -181,7 +181,9 @@ class Arr
     {
         $return = [];
 
-        array_walk_recursive($array, function ($x) use (&$return) { $return[] = $x; });
+        array_walk_recursive($array, function ($x) use (&$return) {
+            $return[] = $x;
+        });
 
         return $return;
     }
@@ -197,7 +199,13 @@ class Arr
     {
         $original = &$array;
 
-        foreach ((array) $keys as $key) {
+        $keys = (array) $keys;
+
+        if (count($keys) === 0) {
+            return;
+        }
+
+        foreach ($keys as $key) {
             $parts = explode('.', $key);
 
             while (count($parts) > 1) {
@@ -205,6 +213,8 @@ class Arr
 
                 if (isset($array[$part]) && is_array($array[$part])) {
                     $array = &$array[$part];
+                } else {
+                    $parts = [];
                 }
             }
 
@@ -234,7 +244,7 @@ class Arr
         }
 
         foreach (explode('.', $key) as $segment) {
-            if (!is_array($array) || !array_key_exists($segment, $array)) {
+            if (! is_array($array) || ! array_key_exists($segment, $array)) {
                 return value($default);
             }
 
@@ -262,7 +272,7 @@ class Arr
         }
 
         foreach (explode('.', $key) as $segment) {
-            if (!is_array($array) || !array_key_exists($segment, $array)) {
+            if (! is_array($array) || ! array_key_exists($segment, $array)) {
                 return false;
             }
 
@@ -270,6 +280,21 @@ class Arr
         }
 
         return true;
+    }
+
+    /**
+     * Determines if an array is associative.
+     *
+     * An array is "associative" if it doesn't have sequential numerical keys beginning with zero.
+     *
+     * @param  array  $array
+     * @return bool
+     */
+    public static function isAssoc(array $array)
+    {
+        $keys = array_keys($array);
+
+        return array_keys($keys) !== $keys;
     }
 
     /**
@@ -325,11 +350,30 @@ class Arr
      */
     protected static function explodePluckParameters($value, $key)
     {
-        $value = is_array($value) ? $value : explode('.', $value);
+        $value = is_string($value) ? explode('.', $value) : $value;
 
         $key = is_null($key) || is_array($key) ? $key : explode('.', $key);
 
         return [$value, $key];
+    }
+
+    /**
+     * Push an item onto the beginning of an array.
+     *
+     * @param  array  $array
+     * @param  mixed  $value
+     * @param  mixed  $key
+     * @return array
+     */
+    public static function prepend($array, $value, $key = null)
+    {
+        if (is_null($key)) {
+            array_unshift($array, $value);
+        } else {
+            $array = [$key => $value] + $array;
+        }
+
+        return $array;
     }
 
     /**
@@ -373,7 +417,7 @@ class Arr
             // If the key doesn't exist at this depth, we will just create an empty array
             // to hold the next value, allowing us to create the arrays to hold final
             // values at the correct depth. Then we'll keep digging into the array.
-            if (!isset($array[$key]) || !is_array($array[$key])) {
+            if (! isset($array[$key]) || ! is_array($array[$key])) {
                 $array[$key] = [];
             }
 
@@ -406,14 +450,16 @@ class Arr
     public static function sortRecursive($array)
     {
         foreach ($array as &$value) {
-            if (is_array($value) && isset($value[0])) {
-                sort($value);
-            } elseif (is_array($value)) {
-                self::sortRecursive($value);
+            if (is_array($value)) {
+                $value = static::sortRecursive($value);
             }
         }
 
-        ksort($array);
+        if (static::isAssoc($array)) {
+            ksort($array);
+        } else {
+            sort($array);
+        }
 
         return $array;
     }

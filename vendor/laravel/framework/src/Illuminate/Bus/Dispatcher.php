@@ -130,7 +130,6 @@ class Dispatcher implements DispatcherContract, QueueingDispatcher, HandlerResol
         if ($constructor = $reflection->getConstructor()) {
             $injected = array_map(function ($parameter) use ($command, $source, $extras) {
                 return $this->getParameterValueForCommand($command, $source, $parameter, $extras);
-
             }, $constructor->getParameters());
         }
 
@@ -235,7 +234,7 @@ class Dispatcher implements DispatcherContract, QueueingDispatcher, HandlerResol
     {
         $queue = call_user_func($this->queueResolver);
 
-        if (!$queue instanceof Queue) {
+        if (! $queue instanceof Queue) {
             throw new RuntimeException('Queue resolver did not return a Queue implementation.');
         }
 
@@ -251,11 +250,11 @@ class Dispatcher implements DispatcherContract, QueueingDispatcher, HandlerResol
      *
      * @param  \Illuminate\Contracts\Queue\Queue  $queue
      * @param  mixed  $command
-     * @return void
+     * @return mixed
      */
     protected function pushCommandToQueue($queue, $command)
     {
-        if (isset($command->queue) && isset($command->delay)) {
+        if (isset($command->queue, $command->delay)) {
             return $queue->laterOn($command->queue, $command->delay, $command);
         }
 

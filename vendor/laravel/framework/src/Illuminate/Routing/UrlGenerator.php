@@ -6,11 +6,14 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
+use Illuminate\Support\Traits\Macroable;
 use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Contracts\Routing\UrlGenerator as UrlGeneratorContract;
 
 class UrlGenerator implements UrlGeneratorContract
 {
+    use Macroable;
+
     /**
      * The route collection.
      *
@@ -138,7 +141,7 @@ class UrlGenerator implements UrlGeneratorContract
     }
 
     /**
-     * Generate a absolute URL to the given path.
+     * Generate an absolute URL to the given path.
      *
      * @param  string  $path
      * @param  mixed  $extra
@@ -167,7 +170,14 @@ class UrlGenerator implements UrlGeneratorContract
         // for passing the array of parameters to this URL as a list of segments.
         $root = $this->getRootUrl($scheme);
 
-        return $this->trimUrl($root, $path, $tail);
+        if (($queryPosition = strpos($path, '?')) !== false) {
+            $query = mb_substr($path, $queryPosition);
+            $path = mb_substr($path, 0, $queryPosition);
+        } else {
+            $query = '';
+        }
+
+        return $this->trimUrl($root, $path, $tail).$query;
     }
 
     /**
@@ -199,6 +209,24 @@ class UrlGenerator implements UrlGeneratorContract
         // file in the paths. If it does, we will remove it since it is not needed
         // for asset paths, but only for routes to endpoints in the application.
         $root = $this->getRootUrl($this->getScheme($secure));
+
+        return $this->removeIndex($root).'/'.trim($path, '/');
+    }
+
+    /**
+     * Generate a URL to an asset from a custom root domain such as CDN, etc.
+     *
+     * @param  string  $root
+     * @param  string  $path
+     * @param  bool|null  $secure
+     * @return string
+     */
+    public function assetFrom($root, $path, $secure = null)
+    {
+        // Once we get the root URL, we will check to see if it contains an index.php
+        // file in the paths. If it does, we will remove it since it is not needed
+        // for asset paths, but only for routes to endpoints in the application.
+        $root = $this->getRootUrl($this->getScheme($secure), $root);
 
         return $this->removeIndex($root).'/'.trim($path, '/');
     }
@@ -271,7 +299,7 @@ class UrlGenerator implements UrlGeneratorContract
      */
     public function route($name, $parameters = [], $absolute = true)
     {
-        if (!is_null($route = $this->routes->getByName($name))) {
+        if (! is_null($route = $this->routes->getByName($name))) {
             return $this->toRoute($route, $parameters, $absolute);
         }
 
@@ -358,7 +386,7 @@ class UrlGenerator implements UrlGeneratorContract
         // If the URI has a fragment, we will move it to the end of the URI since it will
         // need to come after any query string that may be added to the URL else it is
         // not going to be available. We will remove it then append it back on here.
-        if (!is_null($fragment = parse_url($uri, PHP_URL_FRAGMENT))) {
+        if (! is_null($fragment = parse_url($uri, PHP_URL_FRAGMENT))) {
             $uri = preg_replace('/#.*/', '', $uri);
         }
 
@@ -436,7 +464,9 @@ class UrlGenerator implements UrlGeneratorContract
      */
     protected function getStringParameters(array $parameters)
     {
-        return Arr::where($parameters, function ($k, $v) { return is_string($k); });
+        return Arr::where($parameters, function ($k) {
+            return is_string($k);
+        });
     }
 
     /**
@@ -447,7 +477,9 @@ class UrlGenerator implements UrlGeneratorContract
      */
     protected function getNumericParameters(array $parameters)
     {
-        return Arr::where($parameters, function ($k, $v) { return is_numeric($k); });
+        return Arr::where($parameters, function ($k) {
+            return is_numeric($k);
+        });
     }
 
     /**
@@ -495,9 +527,9 @@ class UrlGenerator implements UrlGeneratorContract
     {
         $secure = $this->request->isSecure();
 
-        $port = $this->request->getPort();
+        $port = (int) $this->request->getPort();
 
-        if (($secure && $port === 443) || (!$secure && $port === 80)) {
+        if (($secure && $port === 443) || (! $secure && $port === 80)) {
             return $domain;
         }
 
@@ -545,13 +577,13 @@ class UrlGenerator implements UrlGeneratorContract
      */
     public function action($action, $parameters = [], $absolute = true)
     {
-        if ($this->rootNamespace && !(strpos($action, '\\') === 0)) {
+        if ($this->rootNamespace && ! (strpos($action, '\\') === 0)) {
             $action = $this->rootNamespace.'\\'.$action;
         } else {
             $action = trim($action, '\\');
         }
 
-        if (!is_null($route = $this->routes->getByAction($action))) {
+        if (! is_null($route = $this->routes->getByAction($action))) {
             return $this->toRoute($route, $parameters, $absolute);
         }
 
@@ -623,7 +655,7 @@ class UrlGenerator implements UrlGeneratorContract
     /**
      * Get the request instance.
      *
-     * @return \Symfony\Component\HttpFoundation\Request
+     * @return \Illuminate\Http\Request
      */
     public function getRequest()
     {

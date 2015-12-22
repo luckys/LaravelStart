@@ -96,17 +96,17 @@ class ControllerDispatcher
      */
     protected function callWithinStack($instance, $route, $request, $method)
     {
-        $middleware = $this->getMiddleware($instance, $method);
-
         $shouldSkipMiddleware = $this->container->bound('middleware.disable') &&
                                 $this->container->make('middleware.disable') === true;
+
+        $middleware = $shouldSkipMiddleware ? [] : $this->getMiddleware($instance, $method);
 
         // Here we will make a stack onion instance to execute this request in, which gives
         // us the ability to define middlewares on controllers. We will return the given
         // response back out so that "after" filters can be run after the middlewares.
         return (new Pipeline($this->container))
                     ->send($request)
-                    ->through($shouldSkipMiddleware ? [] : $middleware)
+                    ->through($middleware)
                     ->then(function ($request) use ($instance, $route, $method) {
                         return $this->router->prepareResponse(
                             $request, $this->call($instance, $route, $method)
@@ -126,7 +126,7 @@ class ControllerDispatcher
         $results = [];
 
         foreach ($instance->getMiddleware() as $name => $options) {
-            if (!$this->methodExcludedByOptions($method, $options)) {
+            if (! $this->methodExcludedByOptions($method, $options)) {
                 $results[] = $this->router->resolveMiddlewareClassName($name);
             }
         }
@@ -143,8 +143,8 @@ class ControllerDispatcher
      */
     public function methodExcludedByOptions($method, array $options)
     {
-        return (!empty($options['only']) && !in_array($method, (array) $options['only'])) ||
-            (!empty($options['except']) && in_array($method, (array) $options['except']));
+        return (isset($options['only']) && ! in_array($method, (array) $options['only'])) ||
+            (! empty($options['except']) && in_array($method, (array) $options['except']));
     }
 
     /**
@@ -182,7 +182,7 @@ class ControllerDispatcher
                 // them until we get a response or are finished iterating through this filters.
                 $response = $this->callFilter($filter, $route, $request);
 
-                if (!is_null($response)) {
+                if (! is_null($response)) {
                     return $response;
                 }
             }
@@ -280,7 +280,7 @@ class ControllerDispatcher
             $on = explode('|', $on);
         }
 
-        return !in_array(strtolower($request->getMethod()), $on);
+        return ! in_array(strtolower($request->getMethod()), $on);
     }
 
     /**

@@ -35,8 +35,6 @@ namespace Symfony\Component\Console\Input;
  *
  * @see http://www.gnu.org/software/libc/manual/html_node/Argument-Syntax.html
  * @see http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap12.html#tag_12_02
- *
- * @api
  */
 class ArgvInput extends Input
 {
@@ -48,8 +46,6 @@ class ArgvInput extends Input
      *
      * @param array           $argv       An array of parameters from the CLI (in the argv format)
      * @param InputDefinition $definition A InputDefinition instance
-     *
-     * @api
      */
     public function __construct(array $argv = null, InputDefinition $definition = null)
     {
@@ -215,13 +211,13 @@ class ArgvInput extends Input
 
         $option = $this->definition->getOption($name);
 
-        // Convert false values (from a previous call to substr()) to null
-        if (false === $value) {
+        // Convert empty values to null
+        if (!isset($value[0])) {
             $value = null;
         }
 
         if (null !== $value && !$option->acceptValue()) {
-            throw new \RuntimeException(sprintf('The "--%s" option does not accept a value.', $name, $value));
+            throw new \RuntimeException(sprintf('The "--%s" option does not accept a value.', $name));
         }
 
         if (null === $value && $option->acceptValue() && count($this->parsed)) {

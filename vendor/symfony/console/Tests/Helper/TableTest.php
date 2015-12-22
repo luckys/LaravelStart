@@ -180,10 +180,10 @@ TABLE
             array(
                 array('ISBN', 'Title', 'Author'),
                 array(
-                    array("99921-58-10-7", "Divine\nComedy", "Dante Alighieri"),
-                    array("9971-5-0210-2", "Harry Potter\nand the Chamber of Secrets", "Rowling\nJoanne K."),
-                    array("9971-5-0210-2", "Harry Potter\nand the Chamber of Secrets", "Rowling\nJoanne K."),
-                    array("960-425-059-0", "The Lord of the Rings", "J. R. R.\nTolkien"),
+                    array('99921-58-10-7', "Divine\nComedy", 'Dante Alighieri'),
+                    array('9971-5-0210-2', "Harry Potter\nand the Chamber of Secrets", "Rowling\nJoanne K."),
+                    array('9971-5-0210-2', "Harry Potter\nand the Chamber of Secrets", "Rowling\nJoanne K."),
+                    array('960-425-059-0', 'The Lord of the Rings', "J. R. R.\nTolkien"),
                 ),
                 'default',
 <<<TABLE
@@ -427,7 +427,7 @@ TABLE
                 array('ISBN', 'Author'),
                 array(
                     array(
-                        new TableCell("9971-5-0210-0", array('rowspan' => 3, 'colspan' => 1)),
+                        new TableCell('9971-5-0210-0', array('rowspan' => 3, 'colspan' => 1)),
                         'Dante Alighieri',
                     ),
                     array(new TableSeparator()),
@@ -464,12 +464,11 @@ TABLE
         );
     }
 
+    /**
+     * @requires extension mbstring
+     */
     public function testRenderMultiByte()
     {
-        if (!function_exists('mb_strlen')) {
-            $this->markTestSkipped('The "mbstring" extension is not available');
-        }
-
         $table = new Table($output = $this->getOutputStream());
         $table
             ->setHeaders(array('■■'))
@@ -550,6 +549,8 @@ TABLE;
 TABLE;
 
         $this->assertEquals($expected, $this->getOutputContent($output));
+
+        $this->assertEquals($table, $table->addRow(new TableSeparator()), 'fluent interface on addRow() with a single TableSeparator() works');
     }
 
     protected function getOutputStream()

@@ -1,8 +1,12 @@
+> You might also like [Caret](http://caret.io?ref=parsedown) - our Markdown editor for the Desktop.
+
 ## Parsedown Extra
+
+[![Build Status](https://img.shields.io/travis/erusev/parsedown-extra/master.svg?style=flat-square)](https://travis-ci.org/erusev/parsedown-extra)
 
 An extension of [Parsedown](http://parsedown.org) that adds support for [Markdown Extra](https://michelf.ca/projects/php-markdown/extra/).
 
-[[ demo ]](http://parsedown.org/extra/)
+[See Demo](http://parsedown.org/extra/)
 
 ### Installation
 
@@ -13,7 +17,7 @@ Include both `Parsedown.php` and `ParsedownExtra.php` or install [the composer p
 ``` php
 $Extra = new ParsedownExtra();
 
-echo $Extra->text('Hello _Extra_!'); # prints: <p>Hello <em>Extra</em>!</p>
+echo $Extra->text('# Header {.sth}'); # prints: <h1 class="sth">Header</h1>
 ```
 
 ### Questions
@@ -24,4 +28,4 @@ echo $Extra->text('Hello _Extra_!'); # prints: <p>Hello <em>Extra</em>!</p>
 
 **How can I help?**
 
-Use it, star it, share it and if you feel generous, [donate some money](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=528P3NZQMP8N2).
+Use it, star it, share it and in case you feel generous, [donate some money](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=528P3NZQMP8N2).

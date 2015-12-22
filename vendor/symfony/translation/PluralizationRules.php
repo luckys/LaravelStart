@@ -55,6 +55,7 @@ class PluralizationRules
          * Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
          */
         switch ($locale) {
+            case 'az':
             case 'bo':
             case 'dz':
             case 'id':
@@ -73,7 +74,6 @@ class PluralizationRules
                 break;
 
             case 'af':
-            case 'az':
             case 'bn':
             case 'bg':
             case 'ca':
@@ -131,6 +131,7 @@ class PluralizationRules
             case 'fr':
             case 'gun':
             case 'hi':
+            case 'hy':
             case 'ln':
             case 'mg':
             case 'nso':
@@ -189,8 +190,8 @@ class PluralizationRules
     /**
      * Overrides the default plural rule for a given locale.
      *
-     * @param string $rule   A PHP callable
-     * @param string $locale The locale
+     * @param callable $rule   A PHP callable
+     * @param string   $locale The locale
      *
      * @throws \LogicException
      */

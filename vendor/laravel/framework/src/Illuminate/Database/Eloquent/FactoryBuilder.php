@@ -123,8 +123,8 @@ class FactoryBuilder
     protected function makeInstance(array $attributes = [])
     {
         return Model::unguarded(function () use ($attributes) {
-            if (!isset($this->definitions[$this->class][$this->name])) {
-                throw new InvalidArgumentException("Unable to locate factory with name [{$this->name}].");
+            if (! isset($this->definitions[$this->class][$this->name])) {
+                throw new InvalidArgumentException("Unable to locate factory with name [{$this->name}] [{$this->class}].");
             }
 
             $definition = call_user_func($this->definitions[$this->class][$this->name], $this->faker, $attributes);

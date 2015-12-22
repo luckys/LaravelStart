@@ -31,6 +31,8 @@ class DatabaseServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Model::clearBootedModels();
+
         $this->registerEloquentFactory();
 
         $this->registerQueueableEntityResolver();
@@ -47,6 +49,10 @@ class DatabaseServiceProvider extends ServiceProvider
         // interface which may be used by other components requiring connections.
         $this->app->singleton('db', function ($app) {
             return new DatabaseManager($app, $app['db.factory']);
+        });
+
+        $this->app->bind('db.connection', function ($app) {
+            return $app['db']->connection();
         });
     }
 

@@ -28,7 +28,7 @@ class Property extends Node\Stmt
             throw new Error('Properties cannot be declared final');
         }
 
-        parent::__construct(null, $attributes);
+        parent::__construct($attributes);
         $this->type = $type;
         $this->props = $props;
     }
@@ -38,7 +38,8 @@ class Property extends Node\Stmt
     }
 
     public function isPublic() {
-        return ($this->type & Class_::MODIFIER_PUBLIC) !== 0 || $this->type === 0;
+        return ($this->type & Class_::MODIFIER_PUBLIC) !== 0
+            || ($this->type & Class_::VISIBILITY_MODIFER_MASK) === 0;
     }
 
     public function isProtected() {

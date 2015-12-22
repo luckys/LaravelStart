@@ -85,6 +85,8 @@ class BroadcastManager implements FactoryContract
      *
      * @param  string  $name
      * @return \Illuminate\Contracts\Broadcasting\Broadcaster
+     *
+     * @throws \InvalidArgumentException
      */
     protected function resolve($name)
     {
@@ -121,7 +123,7 @@ class BroadcastManager implements FactoryContract
     protected function createPusherDriver(array $config)
     {
         return new PusherBroadcaster(
-            new Pusher($config['key'], $config['secret'], $config['app_id'])
+            new Pusher($config['key'], $config['secret'], $config['app_id'], Arr::get($config, 'options', []))
         );
     }
 

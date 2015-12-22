@@ -23,7 +23,6 @@ class LegacyTableHelperTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
         $this->stream = fopen('php://memory', 'r+');
     }
 
@@ -257,12 +256,11 @@ TABLE
         );
     }
 
+    /**
+     * @requires extension mbstring
+     */
     public function testRenderMultiByte()
     {
-        if (!function_exists('mb_strwidth')) {
-            $this->markTestSkipped('The "mbstring" extension is not available');
-        }
-
         $table = new TableHelper();
         $table
             ->setHeaders(array('■■'))
@@ -284,12 +282,11 @@ TABLE;
         $this->assertEquals($expected, $this->getOutputContent($output));
     }
 
+    /**
+     * @requires extension mbstring
+     */
     public function testRenderFullWidthCharacters()
     {
-        if (!function_exists('mb_strwidth')) {
-            $this->markTestSkipped('The "mbstring" extension is not available');
-        }
-
         $table = new TableHelper();
         $table
             ->setHeaders(array('あいうえお'))

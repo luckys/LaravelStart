@@ -110,10 +110,8 @@ class FileStore implements Store
      */
     protected function createCacheDirectory($path)
     {
-        try {
+        if (! $this->files->exists(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
-        } catch (Exception $e) {
-            //
         }
     }
 
@@ -211,11 +209,13 @@ class FileStore implements Store
      */
     protected function expiration($minutes)
     {
-        if ($minutes === 0) {
+        $time = time() + ($minutes * 60);
+
+        if ($minutes === 0 || $time > 9999999999) {
             return 9999999999;
         }
 
-        return time() + ($minutes * 60);
+        return $time;
     }
 
     /**

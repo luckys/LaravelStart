@@ -25,6 +25,10 @@ class SqlServerGrammar extends Grammar
      */
     public function compileSelect(Builder $query)
     {
+        if (is_null($query->columns)) {
+            $query->columns = ['*'];
+        }
+
         $components = $this->compileComponents($query);
 
         // If an offset is present on the query, we will need to wrap the query in
@@ -42,11 +46,11 @@ class SqlServerGrammar extends Grammar
      *
      * @param  \Illuminate\Database\Query\Builder  $query
      * @param  array  $columns
-     * @return string
+     * @return string|null
      */
     protected function compileColumns(Builder $query, $columns)
     {
-        if (!is_null($query->aggregate)) {
+        if (! is_null($query->aggregate)) {
             return;
         }
 
@@ -77,7 +81,7 @@ class SqlServerGrammar extends Grammar
             return $from.' '.$query->lock;
         }
 
-        if (!is_null($query->lock)) {
+        if (! is_null($query->lock)) {
             return $from.' with(rowlock,'.($query->lock ? 'updlock,' : '').'holdlock)';
         }
 
@@ -96,7 +100,7 @@ class SqlServerGrammar extends Grammar
         // An ORDER BY clause is required to make this offset query work, so if one does
         // not exist we'll just create a dummy clause to trick the database and so it
         // does not complain about the queries for not having an "order by" clause.
-        if (!isset($components['orders'])) {
+        if (! isset($components['orders'])) {
             $components['orders'] = 'order by (select 0)';
         }
 
@@ -200,6 +204,45 @@ class SqlServerGrammar extends Grammar
     }
 
     /**
+     * Compile an exists statement into SQL.
+     *
+     * @param \Illuminate\Database\Query\Builder $query
+     * @return string
+     */
+    public function compileExists(Builder $query)
+    {
+        $existsQuery = clone $query;
+
+        $existsQuery->columns = [];
+
+        return $this->compileSelect($existsQuery->selectRaw('1 [exists]')->limit(1));
+    }
+
+    /**
+     * Compile a "where date" clause.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  array  $where
+     * @return string
+     */
+    protected function whereDate(Builder $query, $where)
+    {
+        $value = $this->parameter($where['value']);
+
+        return 'cast('.$this->wrap($where['column']).' as date) '.$where['operator'].' '.$value;
+    }
+
+    /**
+     * Determine if the grammar supports savepoints.
+     *
+     * @return bool
+     */
+    public function supportsSavepoints()
+    {
+        return false;
+    }
+
+    /**
      * Get the format for database stored dates.
      *
      * @return string
@@ -222,5 +265,54 @@ class SqlServerGrammar extends Grammar
         }
 
         return '['.str_replace(']', ']]', $value).']';
+    }
+
+    /**
+     * Compile an update statement into SQL.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  array  $values
+     * @return string
+     */
+    public function compileUpdate(Builder $query, $values)
+    {
+        $table = $alias = $this->wrapTable($query->from);
+
+        if (strpos(strtolower($table), '] as [') !== false) {
+            $segments = explode('] as [', $table);
+
+            $alias = '['.$segments[1];
+        }
+
+        // Each one of the columns in the update statements needs to be wrapped in the
+        // keyword identifiers, also a place-holder needs to be created for each of
+        // the values in the list of bindings so we can make the sets statements.
+        $columns = [];
+
+        foreach ($values as $key => $value) {
+            $columns[] = $this->wrap($key).' = '.$this->parameter($value);
+        }
+
+        $columns = implode(', ', $columns);
+
+        // If the query has any "join" clauses, we will setup the joins on the builder
+        // and compile them so we can attach them to this update, as update queries
+        // can get join statements to attach to other tables when they're needed.
+        if (isset($query->joins)) {
+            $joins = ' '.$this->compileJoins($query, $query->joins);
+        } else {
+            $joins = '';
+        }
+
+        // Of course, update queries may also be constrained by where clauses so we'll
+        // need to compile the where clauses and attach it to the query so only the
+        // intended records are updated by the SQL statements we generate to run.
+        $where = $this->compileWheres($query);
+
+        if (! empty($joins)) {
+            return trim("update {$alias} set {$columns} from {$table}{$joins} {$where}");
+        }
+
+        return trim("update {$table}{$joins} set $columns $where");
     }
 }

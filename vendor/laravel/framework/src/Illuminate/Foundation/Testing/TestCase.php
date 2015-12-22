@@ -32,7 +32,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        if (!$this->app) {
+        if (! $this->app) {
             $this->refreshApplication();
         }
     }
@@ -56,6 +56,10 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
             $this->app->flush();
 
             $this->app = null;
+        }
+
+        if (property_exists($this, 'serverVariables')) {
+            $this->serverVariables = [];
         }
     }
 

@@ -4,6 +4,7 @@ namespace Illuminate\Foundation\Console;
 
 use PhpParser\Lexer;
 use PhpParser\Parser;
+use ClassPreloader\Factory;
 use Illuminate\Console\Command;
 use ClassPreloader\ClassPreloader;
 use Illuminate\Foundation\Composer;
@@ -13,6 +14,7 @@ use ClassPreloader\Parser\NodeTraverser;
 use ClassPreloader\Exceptions\SkipFileException;
 use Symfony\Component\Console\Input\InputOption;
 use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
+use ClassPreloader\Exceptions\VisitorExceptionInterface;
 
 class OptimizeCommand extends Command
 {
@@ -65,7 +67,7 @@ class OptimizeCommand extends Command
             $this->composer->dumpOptimized();
         }
 
-        if ($this->option('force') || !$this->laravel['config']['app.debug']) {
+        if ($this->option('force') || ! $this->laravel['config']['app.debug']) {
             $this->info('Compiling common classes');
             $this->compileClasses();
         } else {
@@ -80,7 +82,7 @@ class OptimizeCommand extends Command
      */
     protected function compileClasses()
     {
-        $preloader = new ClassPreloader(new PrettyPrinter, new Parser(new Lexer), $this->getTraverser());
+        $preloader = $this->getClassPreloader();
 
         $handle = $preloader->prepareOutput($this->laravel->getCachedCompilePath());
 
@@ -88,7 +90,9 @@ class OptimizeCommand extends Command
             try {
                 fwrite($handle, $preloader->getCode($file, false)."\n");
             } catch (SkipFileException $ex) {
-                //
+                // Class Preloader 2.x
+            } catch (VisitorExceptionInterface $e) {
+                // Class Preloader 3.x
             }
         }
 
@@ -96,13 +100,31 @@ class OptimizeCommand extends Command
     }
 
     /**
+     * Get the class preloader used by the command.
+     *
+     * @return \ClassPreloader\ClassPreloader
+     */
+    protected function getClassPreloader()
+    {
+        // Class Preloader 3.x
+        if (class_exists(Factory::class)) {
+            return (new Factory)->create(['skip' => true]);
+        }
+
+        // Class Preloader 2.x
+        return new ClassPreloader(new PrettyPrinter, new Parser(new Lexer), $this->getTraverser());
+    }
+
+    /**
      * Get the node traverser used by the command.
+     *
+     * Note that this method is only called if we're using Class Preloader 2.x.
      *
      * @return \ClassPreloader\Parser\NodeTraverser
      */
     protected function getTraverser()
     {
-        $traverser = new NodeTraverser();
+        $traverser = new NodeTraverser;
 
         $traverser->addVisitor(new DirVisitor(true));
 
@@ -122,13 +144,13 @@ class OptimizeCommand extends Command
 
         $core = require __DIR__.'/Optimize/config.php';
 
-        $files = array_merge($core, $this->laravel['config']->get('compile.files', []));
+        $files = array_merge($core, $app['config']->get('compile.files', []));
 
-        foreach ($this->laravel['config']->get('compile.providers', []) as $provider) {
+        foreach ($app['config']->get('compile.providers', []) as $provider) {
             $files = array_merge($files, forward_static_call([$provider, 'compiles']));
         }
 
-        return $files;
+        return array_map('realpath', $files);
     }
 
     /**
