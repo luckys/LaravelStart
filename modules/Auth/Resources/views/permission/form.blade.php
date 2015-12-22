@@ -28,7 +28,7 @@
 <div class="form-group">
     <div class="col-lg-offset-2 col-lg-8">
 
-        {!! Form::submit($button, ['class' => 'btn btn-primary']) !!}
+        {!! Form::submit($button, ['class' => 'btn btn-primary', 'id' => 'btn-form']) !!}
 
     </div>
 </div>

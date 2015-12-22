@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="wrapper">
-        @include('partials.message')
+        <div id="success_message"></div>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
@@ -27,4 +27,5 @@
 @section('script')
     <script src="{{ asset('themes/admin/js/validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('themes/admin/js/validation/validation-init.js') }}"></script>
+    <script src="{{ asset('js/ajax.js') }}"></script>
 @stop

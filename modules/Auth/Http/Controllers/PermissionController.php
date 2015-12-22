@@ -1,12 +1,10 @@
 <?php namespace Modules\Auth\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 use Pingpong\Modules\Routing\Controller;
 use Modules\Auth\Entities\Permission;
 use Modules\Auth\Http\Requests\PermissionRequest;
-use Illuminate\Http\Request;
-use App\Http\Requests;
 
 
 class PermissionController extends Controller {
@@ -38,17 +36,22 @@ class PermissionController extends Controller {
         return redirect('auth/logout');
     }
 
-    public function store(PermissionRequest $request) {
+    public function store(Request $request) {
 
-        if(Auth::user()->can('create-permissions')) {
+        if(Auth::user()->can('create-permissions') && $request->ajax()) {
+
+        $this->validate($request, [
+            'name' => 'required',
+            'display_name' => 'required',
+        ]);
 
         $data = Permission::create($request->all());
 
         $permission = Permission::findOrFail($data->id);
 
-       Session::flash('message', trans('auth::ui.permission.message_create', array('name' => $permission->name)));
+        $message = trans('auth::ui.permission.message_create', ['name' => $permission->name]);
 
-        return redirect('auth/permission/create');
+        return response()->json(['message' => $message]);
 
         }
 
@@ -71,15 +74,15 @@ class PermissionController extends Controller {
 
     public function update($id, PermissionRequest $request) {
 
-        if(Auth::user()->can('update-permissions')) {
+        if(Auth::user()->can('update-permissions') && $request->ajax()) {
 
         $permission = Permission::findOrFail($id);
 
         $permission->update($request->all());
 
-        Session::flash('message', trans('auth::ui.permission.message_update', array('name' => $permission->name)));
+        $message = trans('auth::ui.permission.message_update', ['name' => $permission->name]);
 
-        return redirect('auth/permission');
+        return response()->json(['message' => $message, 'url' => '/auth/permission']);
 
         }
 
@@ -91,13 +94,11 @@ class PermissionController extends Controller {
 
         if(Auth::user()->can('delete-permissions') && $request->ajax()) {
     	
-    	//$permission = Permission::findOrFail($id);
+    	$permission = Permission::findOrFail($id);
 
-    	Permission::destroy($id);
-
-        $message = trans('auth::ui.permission.message_delete');
-
-    	//Session::flash('message', trans('auth::ui.permission.message_delete', array('name' => $permission->name)));
+        $message = trans('auth::ui.permission.message_delete', ['name' => $permission->name]);
+        
+        $permission->destroy($id);
 
         return response()->json(['message' => $message]);
 

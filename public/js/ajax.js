@@ -1,9 +1,5 @@
 $(function(){
 
-	$.ajaxSetup({
-   			headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') }
-		});
-
 	addAndEditUsingAjax();
 	deleteUsingAjax();
 
@@ -11,11 +7,13 @@ $(function(){
 
 function addAndEditUsingAjax(){
 	$('#btn-form').click(function(event) {
+
+		var formId = '.cmxform';
+
 		event.preventDefault();
-
-		var formId = '#myForm';
-
+		
 		$.ajax({
+			headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
 			url: $(formId).attr('action'),
 			type: $(formId).attr('method'),
 			data: $(formId).serialize(),
@@ -44,6 +42,7 @@ function deleteUsingAjax(){
 		var form = $('#myForm');
 
 		$.ajax({
+			headers: { 'X-CSRF-Token' : $('meta[name=_token]').attr('content') },
 			url: form.attr('action').replace(':ID', row.data('id')),
 			type: form.attr('method'),
 			data: form.serialize(),
