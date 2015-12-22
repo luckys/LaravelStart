@@ -3,16 +3,17 @@
 return [
 
     'title'             =>  'LaravelStart',
+
     'header_top'        =>  [
-        'change_password'       =>  'Cambiar Contraseña',
-        'logout'        =>  'Salir'
+    'change_password'       =>  'Change Password',
+    'logout'                =>  'Logout'
     ],
 
     'sidebar'           =>  [
         'dashboard'     =>  'Dashboard',
-        'admin_users'   =>  'Administrar Usuarios',
-        'permissions'   =>  'Permisos',
+        'admin_users'   =>  'User Administration',
+        'permissions'   =>  'Permissions',
         'roles'         =>  'Roles',
-        'users'         =>  'Usuarios'
+        'users'         =>  'Users'
     ]
 ];

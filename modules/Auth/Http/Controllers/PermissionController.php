@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Session;
 use Pingpong\Modules\Routing\Controller;
 use Modules\Auth\Entities\Permission;
 use Modules\Auth\Http\Requests\PermissionRequest;
+use Illuminate\Http\Request;
+use App\Http\Requests;
 
 
 class PermissionController extends Controller {
@@ -85,17 +87,19 @@ class PermissionController extends Controller {
 	
     }
 
-    public function destroy($id) {
+    public function destroy(Request $request, $id) {
 
-        if(Auth::user()->can('delete-permissions')) {
+        if(Auth::user()->can('delete-permissions') && $request->ajax()) {
     	
-    	$permission = Permission::findOrFail($id);
+    	//$permission = Permission::findOrFail($id);
 
     	Permission::destroy($id);
 
-    	Session::flash('message', trans('auth::ui.permission.message_delete', array('name' => $permission->name)));
+        $message = trans('auth::ui.permission.message_delete');
 
-        return redirect('auth/permission');
+    	//Session::flash('message', trans('auth::ui.permission.message_delete', array('name' => $permission->name)));
+
+        return response()->json(['message' => $message]);
 
         }
 

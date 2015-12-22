@@ -10,7 +10,7 @@
 
     <!--body wrapper start-->
     <div class="wrapper">
-        @include('partials.message')
+        <div id="success_message"></div>
         <div class="row">
             <div class="col-sm-12">
                 <section class="panel">
@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach($permissions as $permission)
-                                    <tr class="gradeX">
+                                    <tr class="gradeX" data-id="{{ $permission->id }}">
                                         <td>{{ $permission->name }}</td>
                                         <td>{{ $permission->display_name }}</td>
                                         <td>{{ $permission->description }}</td>
@@ -47,16 +47,18 @@
                                         <td>
                                             <p>
                                                 @if(Auth::user()->can('update-permissions'))
+
                                             <a href="{{ url('auth/permission/' . $permission->id . '/edit') }}">
-                                                <button class="btn btn-info " type="button"><i class="fa fa-refresh"></i> {{ trans('auth::ui.permission.button_update') }}</button>
+                                                <button class="btn btn-info" type="button" title="{{ trans('auth::ui.permission.button_update') }}"><i class="fa fa-edit"></i></button>
                                             </a>
+
                                                 @endif
 
-                                                    @if(Auth::user()->can('delete-permissions'))
-                                            {!! Form::open(['url' => 'auth/permission/'. $permission->id, 'method' => 'delete']) !!}
-                                            <button class="btn btn-danger " type="submit"><i class="fa fa-times-circle"></i> {{ trans('auth::ui.permission.button_delete') }}</button>
-                                            {!! Form::close() !!}
-                                                    @endif
+                                                @if(Auth::user()->can('delete-permissions'))
+                                                    <button class="btn btn-danger" type="submit" title="{{ trans('auth::ui.permission.button_delete') }}">
+                                                    <i class="fa fa-trash-o"></i>
+                                                    </button>
+                                                @endif
                                             </p>
                                         </td>
                                         @endif
@@ -80,6 +82,9 @@
             </div>
         </div>
     </div>
+
+    {!! Form::open(['route' => ['auth.permission.destroy', ':ID'], 'method' => 'DELETE', 'id' => 'myForm']) !!}
+    {!! Form::close() !!}
 @stop
 
 @section('script')
@@ -88,4 +93,5 @@
     <script type="text/javascript" src="{{ asset('themes/admin/js/data-tables/DT_bootstrap.js') }}"></script>
     <!--dynamic table initialization -->
     <script src="{{ asset('themes/admin/js/dynamic_table_init.js') }}"></script>
+    <script src="{{ asset('js/ajax.js') }}"></script>
 @stop
