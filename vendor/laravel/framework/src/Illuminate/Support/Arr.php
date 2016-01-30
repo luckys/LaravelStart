@@ -48,7 +48,7 @@ class Arr
     /**
      * Collapse an array of arrays into a single array.
      *
-     * @param  array|\ArrayAccess  $array
+     * @param  \ArrayAccess|array  $array
      * @return array
      */
     public static function collapse($array)
@@ -181,7 +181,9 @@ class Arr
     {
         $return = [];
 
-        array_walk_recursive($array, function ($x) use (&$return) { $return[] = $x; });
+        array_walk_recursive($array, function ($x) use (&$return) {
+            $return[] = $x;
+        });
 
         return $return;
     }
@@ -197,7 +199,13 @@ class Arr
     {
         $original = &$array;
 
-        foreach ((array) $keys as $key) {
+        $keys = (array) $keys;
+
+        if (count($keys) === 0) {
+            return;
+        }
+
+        foreach ($keys as $key) {
             $parts = explode('.', $key);
 
             while (count($parts) > 1) {
@@ -205,6 +213,8 @@ class Arr
 
                 if (isset($array[$part]) && is_array($array[$part])) {
                     $array = &$array[$part];
+                } else {
+                    $parts = [];
                 }
             }
 
@@ -340,11 +350,30 @@ class Arr
      */
     protected static function explodePluckParameters($value, $key)
     {
-        $value = is_array($value) ? $value : explode('.', $value);
+        $value = is_string($value) ? explode('.', $value) : $value;
 
         $key = is_null($key) || is_array($key) ? $key : explode('.', $key);
 
         return [$value, $key];
+    }
+
+    /**
+     * Push an item onto the beginning of an array.
+     *
+     * @param  array  $array
+     * @param  mixed  $value
+     * @param  mixed  $key
+     * @return array
+     */
+    public static function prepend($array, $value, $key = null)
+    {
+        if (is_null($key)) {
+            array_unshift($array, $value);
+        } else {
+            $array = [$key => $value] + $array;
+        }
+
+        return $array;
     }
 
     /**
@@ -422,11 +451,11 @@ class Arr
     {
         foreach ($array as &$value) {
             if (is_array($value)) {
-                $value = self::sortRecursive($value);
+                $value = static::sortRecursive($value);
             }
         }
 
-        if (self::isAssoc($array)) {
+        if (static::isAssoc($array)) {
             ksort($array);
         } else {
             sort($array);

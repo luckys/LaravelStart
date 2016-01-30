@@ -64,7 +64,7 @@ class Container implements ArrayAccess, ContainerContract
     protected $tags = [];
 
     /**
-     * The stack of concretions being current built.
+     * The stack of concretions currently being built.
      *
      * @var array
      */
@@ -142,6 +142,10 @@ class Container implements ArrayAccess, ContainerContract
      */
     public function resolved($abstract)
     {
+        if ($this->isAlias($abstract)) {
+            $abstract = $this->getAlias($abstract);
+        }
+
         return isset($this->resolved[$abstract]) || isset($this->instances[$abstract]);
     }
 
@@ -185,8 +189,8 @@ class Container implements ArrayAccess, ContainerContract
         }
 
         // If the factory is not a Closure, it means it is just a class name which is
-        // is bound into this container to the abstract type and we will just wrap
-        // it up inside a Closure to make things more convenient when extending.
+        // bound into this container to the abstract type and we will just wrap it
+        // up inside its own Closure to give us more convenience when extending.
         if (! $concrete instanceof Closure) {
             $concrete = $this->getClosure($abstract, $concrete);
         }
@@ -223,6 +227,7 @@ class Container implements ArrayAccess, ContainerContract
      * @param  string  $concrete
      * @param  string  $abstract
      * @param  \Closure|string  $implementation
+     * @return void
      */
     public function addContextualBinding($concrete, $abstract, $implementation)
     {
@@ -247,7 +252,7 @@ class Container implements ArrayAccess, ContainerContract
     /**
      * Register a shared binding in the container.
      *
-     * @param  string  $abstract
+     * @param  string|array  $abstract
      * @param  \Closure|string|null  $concrete
      * @return void
      */
@@ -680,7 +685,7 @@ class Container implements ArrayAccess, ContainerContract
      * Get the contextual concrete binding for the given abstract.
      *
      * @param  string  $abstract
-     * @return string
+     * @return string|null
      */
     protected function getContextualConcrete($abstract)
     {
@@ -1011,6 +1016,7 @@ class Container implements ArrayAccess, ContainerContract
      *
      * @param  mixed  $object
      * @param  array  $callbacks
+     * @return void
      */
     protected function fireCallbackArray($object, array $callbacks)
     {

@@ -167,7 +167,7 @@ class Worker
     /**
      * Get the next job from the queue connection.
      *
-     * @param  \Illuminate\Queue\Queue  $connection
+     * @param  \Illuminate\Contracts\Queue\Queue  $connection
      * @param  string  $queue
      * @return \Illuminate\Contracts\Queue\Job|null
      */
@@ -191,7 +191,7 @@ class Worker
      * @param  \Illuminate\Contracts\Queue\Job  $job
      * @param  int  $maxTries
      * @param  int  $delay
-     * @return void
+     * @return array|null
      *
      * @throws \Throwable
      */
@@ -206,6 +206,8 @@ class Worker
             // be auto-deleted after processing and if so we will go ahead and run
             // the delete method on the job. Otherwise we will just keep moving.
             $job->fire();
+
+            $this->raiseAfterJobEvent($connection, $job);
 
             return ['job' => $job, 'failed' => false];
         } catch (Exception $e) {
@@ -223,6 +225,22 @@ class Worker
             }
 
             throw $e;
+        }
+    }
+
+    /**
+     * Raise the after queue job event.
+     *
+     * @param  string  $connection
+     * @param  \Illuminate\Contracts\Queue\Job  $job
+     * @return void
+     */
+    protected function raiseAfterJobEvent($connection, Job $job)
+    {
+        if ($this->events) {
+            $data = json_decode($job->getRawBody(), true);
+
+            $this->events->fire('illuminate.queue.after', [$connection, $job, $data]);
         }
     }
 

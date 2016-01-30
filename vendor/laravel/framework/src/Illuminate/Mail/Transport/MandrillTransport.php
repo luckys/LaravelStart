@@ -44,7 +44,7 @@ class MandrillTransport extends Transport
         $data = [
             'key' => $this->key,
             'to' => $this->getToAddresses($message),
-            'raw_message' => (string) $message,
+            'raw_message' => $message->toString(),
             'async' => false,
         ];
 
@@ -98,7 +98,7 @@ class MandrillTransport extends Transport
      * Set the API key being used by the transport.
      *
      * @param  string  $key
-     * @return void
+     * @return string
      */
     public function setKey($key)
     {

@@ -12,6 +12,7 @@
 namespace Symfony\Component\Console\Helper;
 
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Question\Question;
@@ -41,6 +42,10 @@ class QuestionHelper extends Helper
      */
     public function ask(InputInterface $input, OutputInterface $output, Question $question)
     {
+        if ($output instanceof ConsoleOutputInterface) {
+            $output = $output->getErrorOutput();
+        }
+
         if (!$input->isInteractive()) {
             return $question->getDefault();
         }
@@ -77,7 +82,7 @@ class QuestionHelper extends Helper
     }
 
     /**
-     * Returns the helper's input stream
+     * Returns the helper's input stream.
      *
      * @return resource
      */
@@ -150,18 +155,19 @@ class QuestionHelper extends Helper
      * Outputs the question prompt.
      *
      * @param OutputInterface $output
-     * @param Question $question
+     * @param Question        $question
      */
     protected function writePrompt(OutputInterface $output, Question $question)
     {
         $message = $question->getQuestion();
 
         if ($question instanceof ChoiceQuestion) {
-            $width = max(array_map('strlen', array_keys($question->getChoices())));
+            $maxWidth = max(array_map(array($this, 'strlen'), array_keys($question->getChoices())));
 
             $messages = (array) $question->getQuestion();
             foreach ($question->getChoices() as $key => $value) {
-                $messages[] = sprintf("  [<info>%-${width}s</info>] %s", $key, $value);
+                $width = $maxWidth - $this->strlen($key);
+                $messages[] = '  [<info>'.$key.str_repeat(' ', $width).'</info>] '.$value;
             }
 
             $output->writeln($messages);
@@ -222,7 +228,7 @@ class QuestionHelper extends Helper
             // Backspace Character
             if ("\177" === $c) {
                 if (0 === $numMatches && 0 !== $i) {
-                    $i--;
+                    --$i;
                     // Move cursor backwards
                     $output->write("\033[1D");
                 }
@@ -275,7 +281,7 @@ class QuestionHelper extends Helper
             } else {
                 $output->write($c);
                 $ret .= $c;
-                $i++;
+                ++$i;
 
                 $numMatches = 0;
                 $ofs = 0;

@@ -18,7 +18,7 @@
     },
     "require-dev": {
         "ext-fileinfo": "*",
-        "phpunit/phpunit": "~4.1",
+        "phpunit/phpunit": "~4.8",
         "mockery/mockery": "~0.9",
         "phpspec/phpspec": "^2.2",
         "phpspec/prophecy-phpunit": "~1.0"
@@ -46,6 +46,9 @@
         "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
         "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
         "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter"
+    },
+    "conflict": {
+        "league/flysystem-sftp": "<1.0.6"
     },
     "config": {
         "bin-dir": "bin"

@@ -68,7 +68,7 @@ class ListFailedCommand extends Command
      */
     protected function parseFailedJob(array $failed)
     {
-        $row = array_values(array_except($failed, ['payload']));
+        $row = array_values(Arr::except($failed, ['payload']));
 
         array_splice($row, 3, 0, $this->extractJobName($failed['payload']));
 
@@ -76,9 +76,10 @@ class ListFailedCommand extends Command
     }
 
     /**
-     * @param array $payload
+     * Extract the failed job name from payload.
      *
-     * @return string
+     * @param  string  $payload
+     * @return string|null
      */
     private function extractJobName($payload)
     {

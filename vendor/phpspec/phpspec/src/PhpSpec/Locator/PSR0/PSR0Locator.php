@@ -45,7 +45,7 @@ class PSR0Locator implements ResourceLocatorInterface
      */
     private $fullSpecPath;
     /**
-     * @var \PhpSpec\Util\Filesystem
+     * @var Filesystem
      */
     private $filesystem;
 
@@ -60,6 +60,7 @@ class PSR0Locator implements ResourceLocatorInterface
      * @param string     $srcPath
      * @param string     $specPath
      * @param Filesystem $filesystem
+     * @param string     $psr4Prefix
      */
     public function __construct(
         $srcNamespace = '',
@@ -82,8 +83,12 @@ class PSR0Locator implements ResourceLocatorInterface
         $srcNamespacePath = null === $this->psr4Prefix ?
             $this->srcNamespace :
             substr($this->srcNamespace, strlen($this->psr4Prefix));
-        $this->specNamespace = trim($specNamespacePrefix, ' \\').'\\'.$this->srcNamespace;
-        $specNamespacePath = trim($specNamespacePrefix, ' \\').'\\'.$srcNamespacePath;
+        $this->specNamespace = $specNamespacePrefix ?
+            trim($specNamespacePrefix, ' \\').'\\'.$this->srcNamespace :
+            $this->srcNamespace;
+        $specNamespacePath = $specNamespacePrefix ?
+            trim($specNamespacePrefix, ' \\').'\\'.$srcNamespacePath :
+            $srcNamespacePath;
 
         $this->fullSrcPath   = $this->srcPath.str_replace('\\', $sepr, $srcNamespacePath);
         $this->fullSpecPath  = $this->specPath.str_replace('\\', $sepr, $specNamespacePath);
@@ -150,8 +155,7 @@ class PSR0Locator implements ResourceLocatorInterface
      */
     public function supportsQuery($query)
     {
-        $sepr = DIRECTORY_SEPARATOR;
-        $path = rtrim(realpath(str_replace(array('\\', '/'), $sepr, $query)), $sepr);
+        $path = $this->getQueryPath($query);
 
         if (null === $path) {
             return false;
@@ -163,17 +167,28 @@ class PSR0Locator implements ResourceLocatorInterface
     }
 
     /**
+     * @return boolean
+     */
+    public function isPSR4()
+    {
+        return $this->psr4Prefix !== null;
+    }
+
+    /**
      * @param string $query
      *
      * @return ResourceInterface[]
      */
     public function findResources($query)
     {
-        $sepr = DIRECTORY_SEPARATOR;
-        $path = rtrim(realpath(str_replace(array('\\', '/'), $sepr, $query)), $sepr);
+        $path = $this->getQueryPath($query);
 
         if ('.php' !== substr($path, -4)) {
-            $path .= $sepr;
+            $path .= DIRECTORY_SEPARATOR;
+        }
+
+        if ($path && 0 === strpos($path, $this->fullSpecPath)) {
+            return $this->findSpecResources($path);
         }
 
         if ($path && 0 === strpos($path, $this->fullSrcPath)) {
@@ -187,10 +202,6 @@ class PSR0Locator implements ResourceLocatorInterface
             $path = $this->fullSpecPath.substr($path, strlen($this->srcPath));
             $path = preg_replace('/\.php/', 'Spec.php', $path);
 
-            return $this->findSpecResources($path);
-        }
-
-        if ($path && 0 === strpos($path, $this->specPath)) {
             return $this->findSpecResources($path);
         }
 
@@ -269,6 +280,11 @@ class PSR0Locator implements ResourceLocatorInterface
         return $resources;
     }
 
+    /**
+     * @param $path
+     * 
+     * @return null|string
+     */
     private function findSpecClassname($path)
     {
         // Find namespace and class name
@@ -334,6 +350,11 @@ class PSR0Locator implements ResourceLocatorInterface
         return new PSR0Resource(explode('\\', $classname), $this);
     }
 
+    /**
+     * @param string $classname
+     *
+     * @throws InvalidArgumentException
+     */
     private function validatePsr0Classname($classname)
     {
         $pattern = '/^([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*[\/\\\\]?)*[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/';
@@ -345,5 +366,60 @@ class PSR0Locator implements ResourceLocatorInterface
                 'https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md'
             );
         }
+    }
+
+    /**
+     * @param string $query
+     *
+     * @return string
+     */
+    private function getQueryPath($query)
+    {
+        $sepr = DIRECTORY_SEPARATOR;
+        $replacedQuery = str_replace(array('\\', '/'), $sepr, $query);
+
+        if ($this->queryContainsQualifiedClassName($query)) {
+            $namespacedQuery = null === $this->psr4Prefix ?
+                $replacedQuery :
+                substr($replacedQuery, strlen($this->srcNamespace));
+
+            $path = $this->fullSpecPath . $namespacedQuery . 'Spec.php';
+
+            if ($this->filesystem->pathExists($path)) {
+                return $path;
+            }
+        }
+
+        return rtrim(realpath($replacedQuery), $sepr);
+    }
+
+    /**
+     * @param string $query
+     *
+     * @return bool
+     */
+    private function queryContainsQualifiedClassName($query)
+    {
+        return $this->queryContainsBlackslashes($query) && !$this->isWindowsPath($query);
+    }
+
+    /**
+     * @param string $query
+     *
+     * @return bool
+     */
+    private function queryContainsBlackslashes($query)
+    {
+        return false !== strpos($query, '\\');
+    }
+
+    /**
+     * @param string $query
+     *
+     * @return bool
+     */
+    private function isWindowsPath($query)
+    {
+        return preg_match('/^\w:/', $query);
     }
 }

@@ -193,6 +193,10 @@ class BinaryFileResponse extends Response
             // Use X-Sendfile, do not send any content.
             $type = $request->headers->get('X-Sendfile-Type');
             $path = $this->file->getRealPath();
+            // Fall back to scheme://path for stream wrapped locations.
+            if (false === $path) {
+                $path = $this->file->getPathname();
+            }
             if (strtolower($type) == 'x-accel-redirect') {
                 // Do X-Accel-Mapping substitutions.
                 // @link http://wiki.nginx.org/X-accel#X-Accel-Redirect
@@ -308,6 +312,7 @@ class BinaryFileResponse extends Response
     /**
      * If this is set to true, the file will be unlinked after the request is send
      * Note: If the X-Sendfile header is used, the deleteFileAfterSend setting will not be used.
+     *
      * @param bool $shouldDelete
      *
      * @return BinaryFileResponse

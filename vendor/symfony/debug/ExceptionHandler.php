@@ -38,7 +38,7 @@ class ExceptionHandler
 
     public function __construct($debug = true, $charset = null, $fileLinkFormat = null)
     {
-        if (false !== strpos($charset, '%') xor false === strpos($fileLinkFormat, '%')) {
+        if (false !== strpos($charset, '%')) {
             // Swap $charset and $fileLinkFormat for BC reasons
             $pivot = $fileLinkFormat;
             $fileLinkFormat = $charset;
@@ -153,19 +153,22 @@ class ExceptionHandler
      * it will fallback to plain PHP functions.
      *
      * @param \Exception $exception An \Exception instance
-     *
-     * @see sendPhpResponse()
-     * @see createResponse()
      */
     private function failSafeHandle(\Exception $exception)
     {
-        if (class_exists('Symfony\Component\HttpFoundation\Response', false)) {
+        if (class_exists('Symfony\Component\HttpFoundation\Response', false)
+            && __CLASS__ !== get_class($this)
+            && ($reflector = new \ReflectionMethod($this, 'createResponse'))
+            && __CLASS__ !== $reflector->class
+        ) {
             $response = $this->createResponse($exception);
             $response->sendHeaders();
             $response->sendContent();
-        } else {
-            $this->sendPhpResponse($exception);
+
+            return;
         }
+
+        $this->sendPhpResponse($exception);
     }
 
     /**
@@ -235,7 +238,7 @@ class ExceptionHandler
                     $ind = $count - $position + 1;
                     $class = $this->formatClass($e['class']);
                     $message = nl2br($this->escapeHtml($e['message']));
-                    $content .= sprintf(<<<EOF
+                    $content .= sprintf(<<<'EOF'
                         <h2 class="block_exception clear_fix">
                             <span class="exception_counter">%d/%d</span>
                             <span class="exception_title">%s%s:</span>
@@ -286,7 +289,7 @@ EOF;
      */
     public function getStylesheet(FlattenException $exception)
     {
-        return <<<EOF
+        return <<<'EOF'
             .sf-reset { font: 11px Verdana, Arial, sans-serif; color: #333 }
             .sf-reset .clear { clear:both; height:0; font-size:0; line-height:0; }
             .sf-reset .clear_fix:after { display:block; height:0; clear:both; visibility:hidden; }

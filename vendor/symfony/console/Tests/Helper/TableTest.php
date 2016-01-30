@@ -427,7 +427,7 @@ TABLE
                 array('ISBN', 'Author'),
                 array(
                     array(
-                        new TableCell("9971-5-0210-0", array('rowspan' => 3, 'colspan' => 1)),
+                        new TableCell('9971-5-0210-0', array('rowspan' => 3, 'colspan' => 1)),
                         'Dante Alighieri',
                     ),
                     array(new TableSeparator()),
@@ -461,15 +461,32 @@ TABLE
 
 TABLE
             ),
+            'Row with multiple cells' => array(
+                array(),
+                array(
+                    array(
+                        new TableCell('1', array('colspan' => 3)),
+                        new TableCell('2', array('colspan' => 2)),
+                        new TableCell('3', array('colspan' => 2)),
+                        new TableCell('4', array('colspan' => 2)),
+                    ),
+        ),
+                'default',
+<<<TABLE
++--+--+--+--+--+--+--+--+--+
+| 1      | 2   | 3   | 4   |
++--+--+--+--+--+--+--+--+--+
+
+TABLE
+            ),
         );
     }
 
+    /**
+     * @requires extension mbstring
+     */
     public function testRenderMultiByte()
     {
-        if (!function_exists('mb_strlen')) {
-            $this->markTestSkipped('The "mbstring" extension is not available');
-        }
-
         $table = new Table($output = $this->getOutputStream());
         $table
             ->setHeaders(array('■■'))

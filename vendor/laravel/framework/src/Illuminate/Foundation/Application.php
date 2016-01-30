@@ -25,7 +25,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      *
      * @var string
      */
-    const VERSION = '5.1.10 (LTS)';
+    const VERSION = '5.1.28 (LTS)';
 
     /**
      * The base path for the Laravel installation.
@@ -726,7 +726,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * Boot the given service provider.
      *
      * @param  \Illuminate\Support\ServiceProvider  $provider
-     * @return void
+     * @return mixed
      */
     protected function bootProvider(ServiceProvider $provider)
     {
@@ -1037,6 +1037,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
             'cookie'               => ['Illuminate\Cookie\CookieJar', 'Illuminate\Contracts\Cookie\Factory', 'Illuminate\Contracts\Cookie\QueueingFactory'],
             'encrypter'            => ['Illuminate\Encryption\Encrypter', 'Illuminate\Contracts\Encryption\Encrypter'],
             'db'                   => 'Illuminate\Database\DatabaseManager',
+            'db.connection'        => ['Illuminate\Database\Connection', 'Illuminate\Database\ConnectionInterface'],
             'events'               => ['Illuminate\Events\Dispatcher', 'Illuminate\Contracts\Events\Dispatcher'],
             'files'                => 'Illuminate\Filesystem\Filesystem',
             'filesystem'           => ['Illuminate\Filesystem\FilesystemManager', 'Illuminate\Contracts\Filesystem\Factory'],

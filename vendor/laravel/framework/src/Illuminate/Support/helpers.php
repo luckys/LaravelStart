@@ -62,7 +62,7 @@ if (! function_exists('array_collapse')) {
     /**
      * Collapse an array of arrays into a single array.
      *
-     * @param  array|\ArrayAccess  $array
+     * @param  \ArrayAccess|array  $array
      * @return array
      */
     function array_collapse($array)
@@ -143,21 +143,6 @@ if (! function_exists('array_first')) {
     }
 }
 
-if (! function_exists('array_last')) {
-    /**
-     * Return the last element in an array passing a given truth test.
-     *
-     * @param  array  $array
-     * @param  callable  $callback
-     * @param  mixed  $default
-     * @return mixed
-     */
-    function array_last($array, $callback, $default = null)
-    {
-        return Arr::last($array, $callback, $default);
-    }
-}
-
 if (! function_exists('array_flatten')) {
     /**
      * Flatten a multi-dimensional array into a single level.
@@ -214,6 +199,21 @@ if (! function_exists('array_has')) {
     }
 }
 
+if (! function_exists('array_last')) {
+    /**
+     * Return the last element in an array passing a given truth test.
+     *
+     * @param  array  $array
+     * @param  callable  $callback
+     * @param  mixed  $default
+     * @return mixed
+     */
+    function array_last($array, $callback, $default = null)
+    {
+        return Arr::last($array, $callback, $default);
+    }
+}
+
 if (! function_exists('array_only')) {
     /**
      * Get a subset of the items from the given array.
@@ -233,13 +233,28 @@ if (! function_exists('array_pluck')) {
      * Pluck an array of values from an array.
      *
      * @param  array   $array
-     * @param  string  $value
-     * @param  string  $key
+     * @param  string|array  $value
+     * @param  string|array|null  $key
      * @return array
      */
     function array_pluck($array, $value, $key = null)
     {
         return Arr::pluck($array, $value, $key);
+    }
+}
+
+if (! function_exists('array_prepend')) {
+    /**
+     * Push an item onto the beginning of an array.
+     *
+     * @param  array  $array
+     * @param  mixed  $value
+     * @param  mixed  $key
+     * @return array
+     */
+    function array_prepend($array, $value, $key = null)
+    {
+        return Arr::prepend($array, $value, $key);
     }
 }
 
@@ -442,7 +457,7 @@ if (! function_exists('e')) {
     /**
      * Escape HTML entities in a string.
      *
-     * @param  \Illuminate\Support\Htmlable|string  $value
+     * @param  \Illuminate\Contracts\Support\Htmlable|string  $value
      * @return string
      */
     function e($value)

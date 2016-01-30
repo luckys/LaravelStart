@@ -99,11 +99,11 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
     public function setConfig(array $config)
     {
         foreach ($this->configurable as $setting) {
-            if (! isset($config[$setting])) {
+            if ( ! isset($config[$setting])) {
                 continue;
             }
 
-            $method = 'set'.ucfirst($setting);
+            $method = 'set' . ucfirst($setting);
 
             if (method_exists($this, $method)) {
                 $this->$method($config[$setting]);
@@ -208,7 +208,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
      */
     public function setRoot($root)
     {
-        $this->root = rtrim($root, '\\/').$this->separator;
+        $this->root = rtrim($root, '\\/') . $this->separator;
 
         return $this;
     }
@@ -397,7 +397,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
         $item = preg_replace('#\s+#', ' ', trim($item), 7);
         list($permissions, /* $number */, /* $owner */, /* $group */, $size, /* $month */, /* $day */, /* $time*/, $name) = explode(' ', $item, 9);
         $type = $this->detectType($permissions);
-        $path = empty($base) ? $name : $base.$this->separator.$name;
+        $path = empty($base) ? $name : $base . $this->separator . $name;
 
         if ($type === 'dir') {
             return compact('type', 'path');
@@ -422,11 +422,11 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
     {
         $item = preg_replace('#\s+#', ' ', trim($item), 3);
         list($date, $time, $size, $name) = explode(' ', $item, 4);
-        $path = empty($base) ? $name : $base.$this->separator.$name;
+        $path = empty($base) ? $name : $base . $this->separator . $name;
 
         // Check for the correct date/time format
         $format = strlen($date) === 8 ? 'm-d-yH:iA' : 'Y-m-dH:i';
-        $timestamp = DateTime::createFromFormat($format, $date.$time)->getTimestamp();
+        $timestamp = DateTime::createFromFormat($format, $date . $time)->getTimestamp();
 
         if ($size === '<DIR>') {
             $type = 'dir';
@@ -507,7 +507,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
     public function removeDotDirectories(array $list)
     {
         $filter = function ($line) {
-            if (! empty($line) && !preg_match('#.* \.(\.)?$|^total#', $line)) {
+            if ( ! empty($line) && ! preg_match('#.* \.(\.)?$|^total#', $line)) {
                 return true;
             }
 
@@ -536,16 +536,6 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
     /**
      * @inheritdoc
      */
-    public function getTimestamp($path)
-    {
-        $timestamp = ftp_mdtm($this->getConnection(), $path);
-
-        return ($timestamp !== -1) ? ['timestamp' => $timestamp] : false;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getVisibility($path)
     {
         return $this->getMetadata($path);
@@ -558,7 +548,7 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
      */
     public function ensureDirectory($dirname)
     {
-        if (! empty($dirname) && !$this->has($dirname)) {
+        if ( ! empty($dirname) && ! $this->has($dirname)) {
             $this->createDir($dirname, new Config());
         }
     }
@@ -568,7 +558,8 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
      */
     public function getConnection()
     {
-        if (! $this->connection) {
+        if ( ! $this->isConnected()) {
+            $this->disconnect();
             $this->connect();
         }
 
@@ -612,4 +603,11 @@ abstract class AbstractFtpAdapter extends AbstractAdapter
      * Close the connection.
      */
     abstract public function disconnect();
+
+    /**
+     * Check if a connection is active.
+     *
+     * @return bool
+     */
+    abstract public function isConnected();
 }

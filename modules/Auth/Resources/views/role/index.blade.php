@@ -94,7 +94,7 @@
 
 @section('script')
             <!--dynamic table-->
-    <script type="text/javascript" language="javascript" src="{{ asset('themes/admin/js/advanced-datatable/js/jquery.dataTables.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('themes/admin/js/advanced-datatable/js/jquery.dataTables.js')}}"></script>
     <script type="text/javascript" src="{{ asset('themes/admin/js/data-tables/DT_bootstrap.js') }}"></script>
     <!--dynamic table initialization -->
     <script src="{{ asset('themes/admin/js/dynamic_table_init.js') }}"></script>

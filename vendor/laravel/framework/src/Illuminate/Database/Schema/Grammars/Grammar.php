@@ -2,6 +2,7 @@
 
 namespace Illuminate\Database\Schema\Grammars;
 
+use RuntimeException;
 use Doctrine\DBAL\Types\Type;
 use Illuminate\Support\Fluent;
 use Doctrine\DBAL\Schema\Table;
@@ -279,6 +280,13 @@ abstract class Grammar extends BaseGrammar
      */
     public function compileChange(Blueprint $blueprint, Fluent $command, Connection $connection)
     {
+        if (! $connection->isDoctrineAvailable()) {
+            throw new RuntimeException(sprintf(
+                'Changing columns for table "%s" requires Doctrine DBAL; install "doctrine/dbal".',
+                $blueprint->getTable()
+            ));
+        }
+
         $schema = $connection->getDoctrineSchemaManager();
 
         $tableDiff = $this->getChangedDiff($blueprint, $schema);
@@ -319,7 +327,7 @@ abstract class Grammar extends BaseGrammar
             $column = $this->getDoctrineColumnForChange($table, $fluent);
 
             // Here we will spin through each fluent column definition and map it to the proper
-            // Doctrine column definitions, which is necessasry because Laravel and Doctrine
+            // Doctrine column definitions - which is necessary because Laravel and Doctrine
             // use some different terminology for various column attributes on the tables.
             foreach ($fluent->getAttributes() as $key => $value) {
                 if (! is_null($option = $this->mapFluentOptionToDoctrine($key))) {
@@ -414,7 +422,7 @@ abstract class Grammar extends BaseGrammar
      * Get the matching Doctrine option for a given Fluent attribute name.
      *
      * @param  string  $attribute
-     * @return string
+     * @return string|null
      */
     protected function mapFluentOptionToDoctrine($attribute)
     {
