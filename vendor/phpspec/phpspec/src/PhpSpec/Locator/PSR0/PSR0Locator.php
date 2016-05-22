@@ -272,6 +272,14 @@ class PSR0Locator implements ResourceLocatorInterface
         return $resources;
     }
 
+<<<<<<< Updated upstream
+=======
+    /**
+     * @param $path
+     *
+     * @return null|string
+     */
+>>>>>>> Stashed changes
     private function findSpecClassname($path)
     {
         // Find namespace and class name
@@ -314,7 +322,7 @@ class PSR0Locator implements ResourceLocatorInterface
         $classname = $this->findSpecClassname($path);
 
         if (null === $classname) {
-            throw new \RuntimeException('Spec file does not contains any class definition.');
+            throw new \RuntimeException(sprintf('Spec file "%s" does not contains any class definition.', $path));
         }
 
         // Remove spec namespace from the begining of the classname.

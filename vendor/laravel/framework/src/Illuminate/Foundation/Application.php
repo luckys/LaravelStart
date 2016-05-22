@@ -25,7 +25,11 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      *
      * @var string
      */
+<<<<<<< Updated upstream
     const VERSION = '5.1.27 (LTS)';
+=======
+    const VERSION = '5.1.35 (LTS)';
+>>>>>>> Stashed changes
 
     /**
      * The base path for the Laravel installation.
@@ -517,7 +521,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      */
     public function register($provider, $options = [], $force = false)
     {
-        if ($registered = $this->getProvider($provider) && ! $force) {
+        if (($registered = $this->getProvider($provider)) && ! $force) {
             return $registered;
         }
 

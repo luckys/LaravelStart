@@ -29,7 +29,7 @@
     <label  class="col-lg-2 col-sm-2 control-label">{{ trans('auth::ui.permission.names') }}</label>
     <div class="col-lg-10">
 
-    {!! Form::select('permission_id[]', $permissions, isset($permission_role) ? $permission_role : null, array(
+    {!! Form::select('permission_id[]', $permissions, isset($role_permission) ? $role_permission : null, array(
     'multiple' => true, 'class' => 'multi-select', 'id' => 'permissionSelect')) !!}
 
     </div>

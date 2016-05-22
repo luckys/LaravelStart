@@ -1,9 +1,47 @@
+<<<<<<< Updated upstream
 2.4.0 / 2015/11/28
+=======
+2.5.0 / 2016-03-20
+==================
+
+* No changes from RC1
+
+
+2.5.0-rc1 / 2016-03-12
+======================
+
+* Fixed bug with typehints in classes defined in spec file
+
+2.5.0-beta / 2016-02-16
+=======================
+
+* Supports grouped Use statements
+* Now shows path in error message when spec file doesn't contain a class
+* Supports catching PHP 7 Errors in shouldThrow
+* No longer attempts to generate methods with reserved names
+* Fixed bug where bootstrapped classes could not be loaded after class generation
+* Fixed bug where line numbers were incorrectly reported on PHP 7
+* Fixed new methods being inserted incorrectly when strings included closing brace
+* Dot formatter now shows spec count on last line
+
+2.4.1 / 2016-01-01
+==================
+
+* Correctly handle nested class definitions 
+* Correctly handle anonymous functions in code generation
+* Fixed rerunning on Windows platform
+* Fixed code generation on Windows platform
+* Fixed issue with fatal errors being suppressed
+* Handle underscores correctly when using PSR-4
+* Fixed HTML formatter
+
+2.4.0 / 2015-11-28
+>>>>>>> Stashed changes
 ==================
 
 * Improved docblock for beConstructedThrough()
 
-2.4.0-rc1 / 2015/11/20
+2.4.0-rc1 / 2015-11-20
 ======================
 
 * No changes from RC1

@@ -175,7 +175,11 @@ class DebugClassLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeprecatedSuper($class, $super, $type)
     {
+<<<<<<< Updated upstream
         set_error_handler('var_dump', 0);
+=======
+        set_error_handler(function () { return false; });
+>>>>>>> Stashed changes
         $e = error_reporting(0);
         trigger_error('', E_USER_DEPRECATED);
 
@@ -205,7 +209,11 @@ class DebugClassLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testDeprecatedSuperInSameNamespace()
     {
+<<<<<<< Updated upstream
         set_error_handler('var_dump', 0);
+=======
+        set_error_handler(function () { return false; });
+>>>>>>> Stashed changes
         $e = error_reporting(0);
         trigger_error('', E_USER_NOTICE);
 
@@ -231,7 +239,11 @@ class DebugClassLoaderTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('PHP7 already prevents using reserved names.');
         }
 
+<<<<<<< Updated upstream
         set_error_handler('var_dump', 0);
+=======
+        set_error_handler(function () { return false; });
+>>>>>>> Stashed changes
         $e = error_reporting(0);
         trigger_error('', E_USER_NOTICE);
 

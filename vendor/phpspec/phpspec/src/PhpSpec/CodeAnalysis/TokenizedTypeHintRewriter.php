@@ -72,6 +72,7 @@ final class TokenizedTypeHintRewriter implements TypeHintRewriter
         $this->currentClass = '';
         $this->currentFunction = '';
     }
+
     /**
      * @param array $tokens
      * @return array $tokens
@@ -79,6 +80,15 @@ final class TokenizedTypeHintRewriter implements TypeHintRewriter
     private function stripTypeHints($tokens)
     {
         foreach ($tokens as $index => $token) {
+<<<<<<< Updated upstream
+=======
+            if ($this->isToken($token, '{')) {
+                $this->currentBodyLevel++;
+            }
+            elseif ($this->isToken($token, '}')) {
+                $this->currentBodyLevel--;
+            }
+>>>>>>> Stashed changes
 
             switch ($this->state) {
                 case self::STATE_READING_ARGUMENTS:
@@ -99,13 +109,35 @@ final class TokenizedTypeHintRewriter implements TypeHintRewriter
                     }
                     break;
                 case self::STATE_READING_CLASS:
+<<<<<<< Updated upstream
                     if ($this->tokenHasType($token, T_STRING) && !$this->currentClass) {
+=======
+                    if ('{' == $token && $this->currentFunction) {
+                        $this->state = self::STATE_READING_FUNCTION_BODY;
+                        $this->currentBodyLevel = 1;
+                    }
+                    elseif ('}' == $token && $this->currentClass) {
+                        $this->state = self::STATE_DEFAULT;
+                        $this->currentClass = null;
+                    }
+                    elseif ($this->tokenHasType($token, T_STRING) && !$this->currentClass && $this->shouldExtractTokensOfClass($token[1])) {
+>>>>>>> Stashed changes
                         $this->currentClass = $token[1];
                     }
-                    elseif($this->tokenHasType($token, T_FUNCTION)) {
+                    elseif ($this->tokenHasType($token, T_FUNCTION) && $this->currentClass) {
                         $this->state = self::STATE_READING_FUNCTION;
                     }
                     break;
+<<<<<<< Updated upstream
+=======
+                case self::STATE_READING_FUNCTION_BODY:
+                    if ('}' == $token && $this->currentBodyLevel === 0) {
+                        $this->currentFunction = '';
+                        $this->state = self::STATE_READING_CLASS;
+                    }
+
+                    break;
+>>>>>>> Stashed changes
                 default:
                     if ($this->tokenHasType($token, T_CLASS)) {
                         $this->state = self::STATE_READING_CLASS;
@@ -137,7 +169,10 @@ final class TokenizedTypeHintRewriter implements TypeHintRewriter
         $typehint = '';
         for ($i = $index - 1; in_array($tokens[$i][0], $this->typehintTokens); $i--) {
             $typehint = $tokens[$i][1] . $typehint;
-            unset($tokens[$i]);
+
+            if (T_WHITESPACE !== $tokens[$i][0]) {
+                unset($tokens[$i]);
+            }
         }
 
         if ($typehint = trim($typehint)) {
@@ -170,5 +205,26 @@ final class TokenizedTypeHintRewriter implements TypeHintRewriter
     private function tokenHasType($token, $type)
     {
         return is_array($token) && $type == $token[0];
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return bool
+     */
+    private function shouldExtractTokensOfClass($className)
+    {
+        return substr($className, -4) == 'Spec';
+    }
+
+    /**
+     * @param array|string $token
+     * @param string $string
+     *
+     * @return bool
+     */
+    private function isToken($token, $string)
+    {
+        return $token == $string || (is_array($token) && $token[1] == $string);
     }
 }

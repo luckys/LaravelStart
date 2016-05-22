@@ -2,6 +2,7 @@
 
 namespace League\Flysystem\Adapter;
 
+use ErrorException;
 use League\Flysystem\Adapter\Polyfill\StreamedCopyTrait;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
@@ -305,8 +306,8 @@ class Ftp extends AbstractFtpAdapter
     protected function createActualDirectory($directory, $connection)
     {
         // List the current directory
-        $listing = ftp_nlist($connection, '.');
-
+        $listing = ftp_nlist($connection, '.') ?: [];
+        
         foreach ($listing as $key => $item) {
             if (preg_match('~^\./.*~', $item)) {
                 $listing[$key] = substr($item, 2);
@@ -337,7 +338,7 @@ class Ftp extends AbstractFtpAdapter
             return ['type' => 'dir', 'path' => $path];
         }
 
-        $listing = ftp_rawlist($connection, str_replace('*', '\\*', $path));
+        $listing = ftp_rawlist($connection, '-A ' . str_replace('*', '\\*', $path));
 
         if (empty($listing)) {
             return false;
@@ -345,6 +346,10 @@ class Ftp extends AbstractFtpAdapter
 
         if (preg_match('/.* not found/', $listing[0])) {
             return false;
+        }
+
+        if (preg_match('/^total [0-9]*$/', $listing[0])) {
+            array_shift($listing);
         }
 
         return $this->normalizeObject($listing[0], '');
@@ -440,9 +445,21 @@ class Ftp extends AbstractFtpAdapter
      * Check if the connection is open.
      *
      * @return bool
+     * @throws ErrorException
      */
     public function isConnected()
     {
-        return is_resource($this->connection) && ftp_systype($this->connection) !== false;
+        try {
+            return is_resource($this->connection) && ftp_systype($this->connection) !== false;
+        } catch (ErrorException $e) {
+            fclose($this->connection);
+            $this->connection = null;
+
+            if (strpos($e->getMessage(), 'ftp_systype') === false) {
+                throw $e;
+            }
+
+            return false;
+        }
     }
 }

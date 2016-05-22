@@ -64,7 +64,7 @@ class RoleController extends Controller {
 
         $role_permission = Role::find($id)->permissions()->lists('permission_id')->toArray();
 
-        $permissions = Permission::lists('display_name', 'id');
+        $permissions = Permission::orderBy('display_name', 'asc')->lists('display_name', 'id');
 
         return view('auth::role.edit', compact('role', 'permissions', 'role_permission'));
         }

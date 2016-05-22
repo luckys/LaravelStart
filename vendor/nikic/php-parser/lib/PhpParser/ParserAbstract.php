@@ -88,6 +88,8 @@ abstract class ParserAbstract implements Parser
     protected $startAttributeStack;
     /** @var array End attributes of last *shifted* token */
     protected $endAttributes;
+    /** @var array Start attributes of last *read* token */
+    protected $lookaheadStartAttributes;
 
     /** @var bool Whether to throw on first error */
     protected $throwOnError;
@@ -185,6 +187,7 @@ abstract class ParserAbstract implements Parser
                     // This is necessary to assign some meaningful attributes to /* empty */ productions. They'll get
                     // the attributes of the next token, even though they don't contain it themselves.
                     $this->startAttributeStack[$this->stackPos+1] = $startAttributes;
+                    $this->lookaheadStartAttributes = $startAttributes;
 
                     //$this->traceRead($symbol);
                 }
@@ -446,7 +449,7 @@ abstract class ParserAbstract implements Parser
     private function getNamespacingStyle(array $stmts) {
         $style = null;
         $hasNotAllowedStmts = false;
-        foreach ($stmts as $stmt) {
+        foreach ($stmts as $i => $stmt) {
             if ($stmt instanceof Node\Stmt\Namespace_) {
                 $currentStyle = null === $stmt->stmts ? 'semicolon' : 'brace';
                 if (null === $style) {
@@ -457,9 +460,23 @@ abstract class ParserAbstract implements Parser
                 } elseif ($style !== $currentStyle) {
                     throw new Error('Cannot mix bracketed namespace declarations with unbracketed namespace declarations', $stmt->getLine());
                 }
-            } elseif (!$stmt instanceof Node\Stmt\Declare_ && !$stmt instanceof Node\Stmt\HaltCompiler) {
-                $hasNotAllowedStmts = true;
+                continue;
             }
+
+            /* declare(), __halt_compiler() and nops can be used before a namespace declaration */
+            if ($stmt instanceof Node\Stmt\Declare_
+                || $stmt instanceof Node\Stmt\HaltCompiler
+                || $stmt instanceof Node\Stmt\Nop) {
+                continue;
+            }
+
+            /* There may be a hashbang line at the very start of the file */
+            if ($i == 0 && $stmt instanceof Node\Stmt\InlineHTML && preg_match('/\A#!.*\r?\n\z/', $stmt->value)) {
+                continue;
+            }
+
+            /* Everything else if forbidden before namespace declarations */
+            $hasNotAllowedStmts = true;
         }
         return $style;
     }

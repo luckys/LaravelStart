@@ -225,10 +225,45 @@ class ValidClassNamePassTest extends CodeCleanerTestCase
                     }
                 }
             '),
+            array('
+                class Psy_Test_CodeCleaner_ValidClassNamePass_ClassWithStatic {
+                    public static function foo() {
+                        return parent::bar();
+                    }
+                }
+            '),
+            array('
+                class Psy_Test_CodeCleaner_ValidClassNamePass_ClassWithStatic {
+                    public static function foo() {
+                        return self::bar();
+                    }
+                }
+            '),
+            array('
+                class Psy_Test_CodeCleaner_ValidClassNamePass_ClassWithStatic {
+                    public static function foo() {
+                        return static::bar();
+                    }
+                }
+            '),
 
-            // PHP 7.0 anonymous classes.
-            array('$obj = new class() {}'),
+            array('class A { static function b() { return new A; } }'),
+            array('
+                class A {
+                    const B = 123;
+                    function c() {
+                        return A::B;
+                    }
+                }
+            '),
+            array('class A {} class B { function c() { return new A; } }'),
         );
+
+        // Ugh. There's gotta be a better way to test for this.
+        if (class_exists('PhpParser\ParserFactory')) {
+            // PHP 7.0 anonymous classes, only supported by PHP Parser v2.x
+            $valid[] = array('$obj = new class() {}');
+        }
 
         if (version_compare(PHP_VERSION, '5.5', '>=')) {
             $valid[] = array('interface A {} A::class');

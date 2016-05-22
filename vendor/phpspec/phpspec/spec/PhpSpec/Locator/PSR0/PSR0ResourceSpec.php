@@ -92,4 +92,29 @@ class PSR0ResourceSpec extends ObjectBehavior
 
         $this->getSpecClassname()->shouldReturn('spec\Local\usr\lib\configSpec');
     }
+<<<<<<< Updated upstream
+=======
+
+    function it_does_not_split_underscores_when_locator_has_psr4_prefix($locator)
+    {
+        $this->beConstructedWith(array('usr', 'lib', 'config_test'), $locator);
+
+        $locator->getFullSrcPath()->willReturn($this->convert_to_path('/local/'));
+        $locator->getFullSpecPath()->willReturn($this->convert_to_path('/local/spec/'));
+        $locator->isPSR4()->willReturn(true);
+
+        $this->getSrcFilename()->shouldReturn($this->convert_to_path('/local/usr/lib/config_test.php'));
+        $this->getSpecFilename()->shouldReturn($this->convert_to_path('/local/spec/usr/lib/config_testSpec.php'));
+    }
+
+    private function convert_to_path($path)
+    {
+        if ('/' === DIRECTORY_SEPARATOR) {
+            return $path;
+        }
+
+        return str_replace('/', DIRECTORY_SEPARATOR, $path);
+    }
+
+>>>>>>> Stashed changes
 }

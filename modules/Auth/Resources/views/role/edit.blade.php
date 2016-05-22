@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('style')
-    <link href="{{ asset('themes/admin/themes/admin/js/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" />
+    <link href="{{ asset('themes/admin/js/jquery-multi-select/css/multi-select.css') }}" rel="stylesheet" />
 @stop
 
 @section('content')
@@ -29,7 +29,7 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('themes/admin/themes/admin/js/validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('themes/admin/js/validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('themes/admin/js/validation/validation-init.js') }}"></script>
     <script src="{{ asset('themes/admin/js/jquery-multi-select/js/jquery.multi-select.js') }}"></script>
     <script src="{{ asset('themes/admin/js/multi-select-init.js') }}"></script>

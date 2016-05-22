@@ -10,12 +10,12 @@ class Role extends EntrustRole {
 
     public function permissions() {
 
-    	return $this->belongsToMany('Modules\Auth\Entities\Permission', 'permission_role');
+    	return $this->belongsToMany(Permission::class, 'permission_role');
     }
 
     public function users() {
 
-        return $this->belongsToMany('Modules\Auth\Entities\User', 'role_user');
+        return $this->belongsToMany(User::class, 'role_user');
     }
 
 }

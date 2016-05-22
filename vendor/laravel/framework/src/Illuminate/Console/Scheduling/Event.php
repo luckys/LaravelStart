@@ -215,7 +215,15 @@ class Event
         $redirect = $this->shouldAppendOutput ? ' >> ' : ' > ';
 
         if ($this->withoutOverlapping) {
+<<<<<<< Updated upstream
             $command = '(touch '.$this->mutexPath().'; '.$this->command.'; rm '.$this->mutexPath().')'.$redirect.$this->output.' 2>&1 &';
+=======
+            if (windows_os()) {
+                $command = '(echo \'\' > "'.$this->mutexPath().'" & '.$this->command.' & del "'.$this->mutexPath().'")'.$redirect.$output.' 2>&1 &';
+            } else {
+                $command = '(touch '.$this->mutexPath().'; '.$this->command.'; rm '.$this->mutexPath().')'.$redirect.$output.' 2>&1 &';
+            }
+>>>>>>> Stashed changes
         } else {
             $command = $this->command.$redirect.$this->output.' 2>&1 &';
         }
