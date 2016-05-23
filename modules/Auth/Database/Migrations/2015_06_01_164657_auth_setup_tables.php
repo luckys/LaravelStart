@@ -11,6 +11,15 @@ class AuthSetupTables extends Migration
      */
     public function up()
     {
+        // Create table for storing permissions
+        Schema::create('permissions', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name')->unique();
+            $table->string('display_name');
+            $table->string('description')->nullable();
+            $table->timestamps();
+        });
+        
         // Create table for storing roles
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
@@ -25,32 +34,10 @@ class AuthSetupTables extends Migration
             $table->increments('id');
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
-            $table->string('username')->nullable();
-            $table->string('email')->nullable();
-            $table->string('password')->nullable();
+            $table->string('username')->unique();
+            $table->string('email')->unique();
+            $table->string('password');
             $table->string('remember_token');
-            $table->timestamps();
-        });
-
-        // Create table for associating roles to users (Many-to-Many)
-        Schema::create('role_user', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->integer('role_id')->unsigned();
-
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')
-                ->onUpdate('cascade')->onDelete('cascade');
-
-            $table->primary(['user_id', 'role_id']);
-        });
-
-        // Create table for storing permissions
-        Schema::create('permissions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->unique();
-            $table->string('display_name')->nullable();
-            $table->string('description')->nullable();
             $table->timestamps();
         });
 
@@ -66,6 +53,19 @@ class AuthSetupTables extends Migration
 
             $table->primary(['permission_id', 'role_id']);
         });
+
+        // Create table for associating roles to users (Many-to-Many)
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('role_id')->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->primary(['user_id', 'role_id']);
+        });
     }
 
     /**
@@ -76,8 +76,9 @@ class AuthSetupTables extends Migration
     public function down()
     {
         Schema::drop('permission_role');
-        Schema::drop('permissions');
         Schema::drop('role_user');
+        Schema::drop('permissions');
         Schema::drop('roles');
+        Schema::drop('users');
     }
 }

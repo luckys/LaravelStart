@@ -1,6 +1,3 @@
-<<<<<<< Updated upstream
-2.4.0 / 2015/11/28
-=======
 2.5.0 / 2016-03-20
 ==================
 
@@ -36,7 +33,6 @@
 * Fixed HTML formatter
 
 2.4.0 / 2015-11-28
->>>>>>> Stashed changes
 ==================
 
 * Improved docblock for beConstructedThrough()

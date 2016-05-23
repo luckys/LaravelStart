@@ -25,4 +25,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         return $this->belongsToMany(Role::class, 'role_user');
     }
+
+    public function getFullnameAttribute()
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
 }

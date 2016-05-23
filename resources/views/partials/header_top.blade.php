@@ -11,7 +11,7 @@
         <ul class="notification-menu">
             <li>
                 <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    {{ Auth::user()->firstname.' ' .Auth::user()->lastname }}
+                    {{ Auth::user()->fullname }}
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-usermenu pull-right">

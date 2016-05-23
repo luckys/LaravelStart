@@ -42,7 +42,7 @@ class Factory implements ArrayAccess
      */
     public static function construct(Faker $faker, $pathToFactories = null)
     {
-        $pathToFactories = $pathToFactories ?: database_path('factories');
+        $pathToFactories = $pathToFactories ?: database_path('Factories');
 
         return (new static($faker))->load($pathToFactories);
     }
@@ -99,7 +99,7 @@ class Factory implements ArrayAccess
     }
 
     /**
-     * Load factories from path.
+     * Load Factories from path.
      *
      * @param  string  $path
      * @return $this

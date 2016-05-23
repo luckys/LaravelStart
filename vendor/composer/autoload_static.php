@@ -4,21 +4,21 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit5645b4e0762ccbabe6c8f9f99b510025
+class ComposerStaticInit6e7fed44039064498de4804601f0afac
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        'ddf6456f347b6e74ab304530cd7c1964' => __DIR__ . '/..' . '/pingpong/support/helpers.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
-        '65fec9ebcfbb3cbb4fd0d519687aea01' => __DIR__ . '/..' . '/danielstjules/stringy/src/Create.php',
+        'ddf6456f347b6e74ab304530cd7c1964' => __DIR__ . '/..' . '/pingpong/support/helpers.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
-        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
+        '65fec9ebcfbb3cbb4fd0d519687aea01' => __DIR__ . '/..' . '/danielstjules/stringy/src/Create.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -362,6 +362,7 @@ class ComposerStaticInit5645b4e0762ccbabe6c8f9f99b510025
         'App\\Http\\Requests\\Request' => __DIR__ . '/../..' . '/app/Http/Requests/Request.php',
         'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
+        'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
@@ -1919,10 +1920,9 @@ class ComposerStaticInit5645b4e0762ccbabe6c8f9f99b510025
         'Mockery\\Undefined' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Undefined.php',
         'Mockery\\VerificationDirector' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/VerificationDirector.php',
         'Mockery\\VerificationExpectation' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/VerificationExpectation.php',
+        'Modules\\Auth\\Database\\Seeders\\AuthDatabaseSeeder' => __DIR__ . '/../..' . '/modules/Auth/Database/Seeders/AuthDatabaseSeeder.php',
         'Modules\\Auth\\Database\\Seeders\\AuthTableSeeder' => __DIR__ . '/../..' . '/modules/Auth/Database/Seeders/AuthTableSeeder.php',
         'Modules\\Auth\\Database\\Seeders\\PermissionTableSeeder' => __DIR__ . '/../..' . '/modules/Auth/Database/Seeders/PermissionTableSeeder.php',
-        'Modules\\Auth\\Database\\Seeders\\RoleTableSeeder' => __DIR__ . '/../..' . '/modules/Auth/Database/Seeders/RoleTableSeeder.php',
-        'Modules\\Auth\\Database\\Seeders\\UserTableSeeder' => __DIR__ . '/../..' . '/modules/Auth/Database/Seeders/UserTableSeeder.php',
         'Modules\\Auth\\Entities\\Permission' => __DIR__ . '/../..' . '/modules/Auth/Entities/Permission.php',
         'Modules\\Auth\\Entities\\Role' => __DIR__ . '/../..' . '/modules/Auth/Entities/Role.php',
         'Modules\\Auth\\Entities\\User' => __DIR__ . '/../..' . '/modules/Auth/Entities/User.php',
@@ -1936,6 +1936,7 @@ class ComposerStaticInit5645b4e0762ccbabe6c8f9f99b510025
         'Modules\\Auth\\Http\\Requests\\RoleRequest' => __DIR__ . '/../..' . '/modules/Auth/Http/Requests/RoleRequest.php',
         'Modules\\Auth\\Http\\Requests\\UserRequest' => __DIR__ . '/../..' . '/modules/Auth/Http/Requests/UserRequest.php',
         'Modules\\Auth\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/modules/Auth/Providers/AuthServiceProvider.php',
+        'Modules\\Auth\\Traits\\SeedPermissions' => __DIR__ . '/../..' . '/modules/Auth/Traits/SeedPermissions.php',
         'Modules\\Dashboard\\Database\\Seeders\\DashboardTableSeeder' => __DIR__ . '/../..' . '/modules/Dashboard/Database/Seeders/DashboardTableSeeder.php',
         'Modules\\Dashboard\\Entities\\Dashboard' => __DIR__ . '/../..' . '/modules/Dashboard/Entities/Dashboard.php',
         'Modules\\Dashboard\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/modules/Dashboard/Http/Controllers/DashboardController.php',
@@ -3793,10 +3794,10 @@ class ComposerStaticInit5645b4e0762ccbabe6c8f9f99b510025
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit5645b4e0762ccbabe6c8f9f99b510025::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit5645b4e0762ccbabe6c8f9f99b510025::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit5645b4e0762ccbabe6c8f9f99b510025::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit5645b4e0762ccbabe6c8f9f99b510025::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit6e7fed44039064498de4804601f0afac::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit6e7fed44039064498de4804601f0afac::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit6e7fed44039064498de4804601f0afac::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit6e7fed44039064498de4804601f0afac::$classMap;
 
         }, null, ClassLoader::class);
     }

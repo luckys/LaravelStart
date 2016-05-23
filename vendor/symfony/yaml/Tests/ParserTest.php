@@ -442,8 +442,6 @@ EOF;
         $this->assertEquals(array('foo' => null, 'bar' => 1), $this->parser->parse($input), '->parse() does not parse objects');
     }
 
-<<<<<<< Updated upstream
-=======
     /**
      * @dataProvider getObjectForMapTests
      */
@@ -515,7 +513,6 @@ YAML;
         return $tests;
     }
 
->>>>>>> Stashed changes
     /**
      * @dataProvider invalidDumpedObjectProvider
      * @expectedException \Symfony\Component\Yaml\Exception\ParseException
@@ -881,8 +878,8 @@ EOF;
     }
 
     /**
-     * @expectedException Symfony\Component\Yaml\Exception\ParseException
-     * @expectedExceptionMessage A colon cannot be used in an unquoted mapping value.
+     * @expectedException \Symfony\Component\Yaml\Exception\ParseException
+     * @expectedExceptionMessage A colon cannot be used in an unquoted mapping value
      */
     public function testColonInMappingValueException()
     {
@@ -892,8 +889,6 @@ EOF;
 
         $this->parser->parse($yaml);
     }
-<<<<<<< Updated upstream
-=======
 
     public function testColonInMappingValueExceptionNotTriggeredByColonInComment()
     {
@@ -1088,7 +1083,6 @@ EOT
             $this->parser->parse($yaml)
         );
     }
->>>>>>> Stashed changes
 }
 
 class B

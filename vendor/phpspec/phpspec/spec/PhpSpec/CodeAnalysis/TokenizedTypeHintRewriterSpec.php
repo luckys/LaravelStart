@@ -70,8 +70,6 @@ class TokenizedTypeHintRewriterSpec extends ObjectBehavior
         ');
     }
 
-<<<<<<< Updated upstream
-=======
     function it_does_not_remove_typehints_in_methods()
     {
         $this->rewrite('
@@ -105,7 +103,6 @@ class TokenizedTypeHintRewriterSpec extends ObjectBehavior
         ');
     }
 
->>>>>>> Stashed changes
     function it_removes_typehints_for_multiple_arguments_in_methods()
     {
         $this->rewrite('

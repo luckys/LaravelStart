@@ -1,11 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-<<<<<<< Updated upstream
-define('PHPSPEC_VERSION', '2.4.0');
-=======
 define('PHPSPEC_VERSION', '2.5.0');
->>>>>>> Stashed changes
 
 if (is_file($autoload = getcwd() . '/vendor/autoload.php')) {
     require $autoload;

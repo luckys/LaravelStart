@@ -1,10 +1,14 @@
 <?php namespace Modules\Auth\Database\Seeders;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Modules\Auth\Traits\SeedPermissions;
 
 class AuthTableSeeder extends Seeder {
+
+    use SeedPermissions;
 
 	/**
 	 * Run the database seeds.
@@ -13,205 +17,87 @@ class AuthTableSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		$this->permissionsUserSeeder();
-        $this->permissionsRoleSeeder();
-        $this->permissionsSeeder();
-        $this->permissionsAllSeeder();
-        $this->rolesSeeder();
-        $this->addPermissionRoleSeeder();
-		$this->usersSeeder();
-		$this->roleUserSeeder();
+        $this->runSeeder();
 	}
 
-	private function permissionsUserSeeder(){
-
-		DB::table('permissions')->insert(array(
-            'name' => 'create-users',
-            'display_name' => 'Create Users',
-            'description' => 'Create users',
+    /**
+     * Agrega un permiso a la BD
+     *
+     * @return void
+     */
+    private function seedPermission($action, $model)
+    {
+        DB::table('permissions')->insert([
+            'name' => $this->formatToSlug($action, $model),
+            'display_name' => $this->formatToCamelCase($action, $model),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-        ));
-
-		DB::table('permissions')->insert(array(
-            'name' => 'read-users',
-            'display_name' => 'Read Users',
-            'description' => 'List Users',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-
-        DB::table('permissions')->insert(array(
-            'name' => 'update-users',
-            'display_name' => 'Update Users',
-            'description' => 'Update Users',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-
-        DB::table('permissions')->insert(array(
-            'name' => 'delete-users',
-            'display_name' => 'Delete Users',
-            'description' => 'Delete Users',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-	}
-
-    private function permissionsRoleSeeder(){
-
-        DB::table('permissions')->insert(array(
-            'name' => 'create-roles',
-            'display_name' => 'Create Roles',
-            'description' => 'Create Roles',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-
-        DB::table('permissions')->insert(array(
-            'name' => 'read-roles',
-            'display_name' => 'Read Roles',
-            'description' => 'List Roles',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-
-        DB::table('permissions')->insert(array(
-            'name' => 'update-roles',
-            'display_name' => 'Update Roles',
-            'description' => 'Update Roles',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-
-        DB::table('permissions')->insert(array(
-            'name' => 'delete-roles',
-            'display_name' => 'Delete Roles',
-            'description' => 'Delete Roles',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
+        ]);
     }
 
-    private function permissionsSeeder(){
-
-        DB::table('permissions')->insert(array(
-            'name' => 'create-permissions',
-            'display_name' => 'Create Permissions',
-            'description' => 'Create Permissions',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-
-        DB::table('permissions')->insert(array(
-            'name' => 'read-permissions',
-            'display_name' => 'Read Permissions',
-            'description' => 'List Permissions',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-
-        DB::table('permissions')->insert(array(
-            'name' => 'update-permissions',
-            'display_name' => 'Update Permissions',
-            'description' => 'Update Permissions',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-
-        DB::table('permissions')->insert(array(
-            'name' => 'delete-permissions',
-            'display_name' => 'Delete Permissions',
-            'description' => 'Delete Permissions',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-    }
-
-    private function permissionsAllSeeder(){
-
-        $name = 'Tables_in_'.env('DB_DATABASE');
-        $data = DB::select('SHOW TABLES WHERE '.$name.' NOT REGEXP "[[.low-line.]]"');
-
-        foreach($data as $value) {
-
-            if(($value->$name != 'users') && ($value->$name != 'migrations') &&
-                ($value->$name != 'roles') && ($value->$name != 'permissions')) {
-                DB::table('permissions')->insert(array(
-                    'name' => 'create-'.$value->$name,
-                    'display_name' => 'Create '.ucwords($value->$name),
-                    'description' => 'Create '.ucwords($value->$name),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ));
-
-                DB::table('permissions')->insert(array(
-                    'name' => 'read-'.$value->$name,
-                    'display_name' => 'Read '.ucwords($value->$name),
-                    'description' => 'List '.ucwords($value->$name),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ));
-
-                DB::table('permissions')->insert(array(
-                    'name' => 'update-'.$value->$name,
-                    'display_name' => 'Update '.ucwords($value->$name),
-                    'description' => 'Update '.ucwords($value->$name),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ));
-
-                DB::table('permissions')->insert(array(
-                    'name' => 'delete-'.$value->$name,
-                    'display_name' => 'Delete '.ucwords($value->$name),
-                    'description' => 'Delete '.ucwords($value->$name),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ));
-            }
-        }
-    }
-
-	private function rolesSeeder(){
-
-		DB::table('roles')->insert(array(
-            'name' => 'admin',
-            'display_name' => 'Administrador',
-            'description' => 'Administra los módulos de usuarios',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ));
-	}
-
-    private function addPermissionRoleSeeder(){
-
-        for($i=1; $i < 13; $i++){
-            DB::table('permission_role')->insert(array(
-                'permission_id' => $i,
-                'role_id' => 1
-            ));
-        }
-    }
-
-	private function usersSeeder(){
+    /**
+     * Agrega un usuario a la BD
+     *
+     * @return void
+     */
+	private function seedUser(){
 
 		DB::table('users')->insert(array(
             'firstname' => 'Jose',
             'lastname' => 'Perez Lopez',
             'username' => 'admin',
             'email' => 'admin@demo.com',
-            'password' => \Hash::make('admin123'),
+            'password' => bcrypt('admin123'),
+            'remember_token' => str_random(10),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ));
-        	}
 
-    private function roleUserSeeder(){
+        DB::table('role_user')->insert([
+            'user_id' => 1,
+            'role_id' => 1,
+        ]);
+    }
 
-            DB::table('role_user')->insert(array(
-                'user_id' => 1,
-                'role_id' => 1
-            ));
+    /**
+     * Agrega el role de administrador a la BD
+     *
+     * @return void
+     */
+    private function seedRole()
+    {
+        DB::table('roles')->insert([
+            'name' => 'admin',
+            'display_name' => 'Administrador',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+
+        for($i=1; $i <= 12; $i++){
+            DB::table('permission_role')->insert([
+                'permission_id' => $i,
+                'role_id' => 1,
+            ]);
+        }
+    }
+
+    /**
+     * Realiza el seed de los datos desde el fichero
+     *
+     * @return void
+     */
+    private function runSeeder()
+    {
+        $array_permissions = Config::get('auth.tables');
+        
+        foreach ($array_permissions as $table => $action) {
+            foreach ($action as $value) {
+                $this->seedPermission($value, $table);
+            }
+        }
+        
+        $this->seedRole();
+        $this->seedUser();
     }
 
 }

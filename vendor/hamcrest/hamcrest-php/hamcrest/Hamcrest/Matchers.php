@@ -9,7 +9,7 @@
 namespace Hamcrest;
 
 /**
- * A series of static factories for all hamcrest matchers.
+ * A series of static Factories for all hamcrest matchers.
  */
 class Matchers
 {

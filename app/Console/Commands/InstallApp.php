@@ -19,17 +19,8 @@ class InstallApp extends Command
      *
      * @var string
      */
-    protected $description = 'Hace una migración y un ejecuta los seeders de la aplicación';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    protected $description = 'Realiza la migración y ejecuta los seeders de la aplicación';
+    
 
     /**
      * Execute the console command.
@@ -37,13 +28,8 @@ class InstallApp extends Command
      * @return mixed
      */
     public function handle() {
-
-        $modules = Module::all();
-
+        
         $this->call('module:migrate');
-
-        foreach($modules as $module)
-
-        $this->call('module:seed', ['module' => $module->name]);
+        $this->call('module:seed');
     }
 }

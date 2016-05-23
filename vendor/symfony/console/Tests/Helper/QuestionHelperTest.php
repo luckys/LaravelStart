@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Console\Tests\Helper;
 
+use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\FormatterHelper;
@@ -370,8 +371,6 @@ class QuestionHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('not yet', $dialog->ask($this->createInputInterfaceMock(false), $this->createOutputInterface(), $question));
     }
 
-<<<<<<< Updated upstream
-=======
     /**
      * @requires function mb_strwidth
      */
@@ -403,7 +402,6 @@ class QuestionHelperTest extends \PHPUnit_Framework_TestCase
         $dialog->ask($this->createInputInterfaceMock(), $output, $question);
     }
 
->>>>>>> Stashed changes
     protected function getInputStream($input)
     {
         $stream = fopen('php://memory', 'r+', false);

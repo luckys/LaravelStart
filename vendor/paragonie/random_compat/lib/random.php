@@ -63,7 +63,7 @@ if (PHP_VERSION_ID < 70000) {
          * In order of preference:
          *   1. Use libsodium if available.
          *   2. fread() /dev/urandom if available (never on Windows)
-         *   3. mcrypt_create_iv($bytes, MCRYPT_CREATE_IV)
+         *   3. mcrypt_create_iv($bytes, MCRYPT_DEV_URANDOM)
          *   4. COM('CAPICOM.Utilities.1')->GetRandom()
          *   5. openssl_random_pseudo_bytes() (absolute last resort)
          *
@@ -71,27 +71,12 @@ if (PHP_VERSION_ID < 70000) {
          */
         if (extension_loaded('libsodium')) {
             // See random_bytes_libsodium.php
-            require_once $RandomCompatDIR.'/random_bytes_libsodium.php';
+            if (PHP_VERSION_ID >= 50300 && function_exists('\\Sodium\\randombytes_buf')) {
+                require_once $RandomCompatDIR.'/random_bytes_libsodium.php';
+            } elseif (method_exists('Sodium', 'randombytes_buf')) {
+                require_once $RandomCompatDIR.'/random_bytes_libsodium_legacy.php';
+            }
         }
-<<<<<<< Updated upstream
-        if (
-            !function_exists('random_bytes') && 
-            DIRECTORY_SEPARATOR === '/' &&
-            @is_readable('/dev/urandom')
-        ) {
-            // DIRECTORY_SEPARATOR === '/' on Unix-like OSes -- this is a fast
-            // way to exclude Windows.
-            // 
-            // Error suppression on is_readable() in case of an open_basedir or 
-            // safe_mode failure. All we care about is whether or not we can 
-            // read it at this point. If the PHP environment is going to panic 
-            // over trying to see if the file can be read in the first place,
-            // that is not helpful to us here.
-            
-            // See random_bytes_dev_urandom.php
-            require_once $RandomCompatDIR.'/random_bytes_dev_urandom.php';
-        }
-=======
 
         /**
          * Reading directly from /dev/urandom:
@@ -139,7 +124,6 @@ if (PHP_VERSION_ID < 70000) {
         /**
          * mcrypt_create_iv()
          */
->>>>>>> Stashed changes
         if (
             !function_exists('random_bytes')
             &&
@@ -187,13 +171,10 @@ if (PHP_VERSION_ID < 70000) {
             $RandomCompat_disabled_classes = null;
             $RandomCompatCOMtest = null;
         }
-<<<<<<< Updated upstream
-=======
 
         /**
          * openssl_random_pseudo_bytes()
          */
->>>>>>> Stashed changes
         if (
             (
                 // Unix-like with PHP >= 5.3.0 or
@@ -214,19 +195,16 @@ if (PHP_VERSION_ID < 70000) {
             // See random_bytes_openssl.php
             require_once $RandomCompatDIR.'/random_bytes_openssl.php';
         }
-<<<<<<< Updated upstream
-=======
 
         /**
          * throw new Exception
          */
->>>>>>> Stashed changes
         if (!function_exists('random_bytes')) {
             /**
              * We don't have any more options, so let's throw an exception right now
              * and hope the developer won't let it fail silently.
              */
-            function random_bytes()
+            function random_bytes($length)
             {
                 throw new Exception(
                     'There is no suitable CSPRNG installed on your system'

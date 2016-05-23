@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d30f21cd8d4a07bf55f3fd04610447b8",
+    "hash": "bba93e01898b836d2d2e57d55488a7b0",
     "content-hash": "a799d394b9ca7c5bb4e09348a240ac25",
     "packages": [
         {
@@ -938,18 +938,6 @@
         },
         {
             "name": "laravel/framework",
-<<<<<<< Updated upstream
-            "version": "v5.1.27",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/framework.git",
-                "reference": "b16f80878fd3603022d3c84593397cedd9af0bcf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/b16f80878fd3603022d3c84593397cedd9af0bcf",
-                "reference": "b16f80878fd3603022d3c84593397cedd9af0bcf",
-=======
             "version": "v5.1.35",
             "source": {
                 "type": "git",
@@ -960,7 +948,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/framework/zipball/50c7e026db1da8a265482fef4417c92f46cc5b78",
                 "reference": "50c7e026db1da8a265482fef4417c92f46cc5b78",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -1076,9 +1063,6 @@
                 "framework",
                 "laravel"
             ],
-<<<<<<< Updated upstream
-            "time": "2015-12-17 20:35:38"
-=======
             "time": "2016-04-27 13:07:50"
         },
         {
@@ -1130,7 +1114,6 @@
                 }
             ],
             "time": "2015-11-28 08:27:09"
->>>>>>> Stashed changes
         },
         {
             "name": "league/flysystem",
@@ -1295,23 +1278,23 @@
         },
         {
             "name": "mtdowling/cron-expression",
-            "version": "v1.0.4",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mtdowling/cron-expression.git",
-                "reference": "fd92e883195e5dfa77720b1868cf084b08be4412"
+                "reference": "c9ee7886f5a12902b225a1a12f36bb45f9ab89e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/fd92e883195e5dfa77720b1868cf084b08be4412",
-                "reference": "fd92e883195e5dfa77720b1868cf084b08be4412",
+                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/c9ee7886f5a12902b225a1a12f36bb45f9ab89e5",
+                "reference": "c9ee7886f5a12902b225a1a12f36bb45f9ab89e5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*"
+                "phpunit/phpunit": "~4.0|~5.0"
             },
             "type": "library",
             "autoload": {
@@ -1335,7 +1318,7 @@
                 "cron",
                 "schedule"
             ],
-            "time": "2015-01-11 23:07:46"
+            "time": "2016-01-26 21:23:30"
         },
         {
             "name": "nesbot/carbon",
@@ -1437,18 +1420,6 @@
         },
         {
             "name": "paragonie/random_compat",
-<<<<<<< Updated upstream
-            "version": "1.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/d762ee5b099a29044603cd4649851e81aa66cb47",
-                "reference": "d762ee5b099a29044603cd4649851e81aa66cb47",
-=======
             "version": "v1.4.1",
             "source": {
                 "type": "git",
@@ -1459,7 +1430,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c7e26a21ba357863de030f0b9e701c7d04593774",
                 "reference": "c7e26a21ba357863de030f0b9e701c7d04593774",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -1494,185 +1464,6 @@
                 "pseudorandom",
                 "random"
             ],
-<<<<<<< Updated upstream
-            "time": "2015-12-10 14:48:13"
-        },
-        {
-            "name": "psr/log",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Psr\\Log\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for logging libraries",
-            "keywords": [
-                "log",
-                "psr",
-                "psr-3"
-            ],
-            "time": "2012-12-21 11:40:51"
-        },
-        {
-            "name": "psy/psysh",
-            "version": "v0.6.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "0f04df0b23663799a8941fae13cd8e6299bde3ed"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/0f04df0b23663799a8941fae13cd8e6299bde3ed",
-                "reference": "0f04df0b23663799a8941fae13cd8e6299bde3ed",
-                "shasum": ""
-            },
-            "require": {
-                "dnoegel/php-xdg-base-dir": "0.1",
-                "jakub-onderka/php-console-highlighter": "0.3.*",
-                "nikic/php-parser": "^1.2.1|~2.0",
-                "php": ">=5.3.9",
-                "symfony/console": "~2.3.10|^2.4.2|~3.0",
-                "symfony/var-dumper": "~2.7|~3.0"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "~1.5",
-                "phpunit/phpunit": "~3.7|~4.0|~5.0",
-                "squizlabs/php_codesniffer": "~2.0",
-                "symfony/finder": "~2.1|~3.0"
-            },
-            "suggest": {
-                "ext-pcntl": "Enabling the PCNTL extension makes PsySH a lot happier :)",
-                "ext-pdo-sqlite": "The doc command requires SQLite to work.",
-                "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
-                "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history."
-            },
-            "bin": [
-                "bin/psysh"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-develop": "0.7.x-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/Psy/functions.php"
-                ],
-                "psr-4": {
-                    "Psy\\": "src/Psy/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Justin Hileman",
-                    "email": "justin@justinhileman.info",
-                    "homepage": "http://justinhileman.com"
-                }
-            ],
-            "description": "An interactive shell for modern PHP.",
-            "homepage": "http://psysh.org",
-            "keywords": [
-                "REPL",
-                "console",
-                "interactive",
-                "shell"
-            ],
-            "time": "2015-11-12 16:18:56"
-        },
-        {
-            "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0697e6aa65c83edf97bb0f23d8763f94e3f11421",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.1,<0.9.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.4-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "lib/swift_required.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Chris Corbyn"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                }
-            ],
-            "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "http://swiftmailer.org",
-            "keywords": [
-                "email",
-                "mail",
-                "mailer"
-            ],
-            "time": "2015-06-06 14:19:39"
-        },
-        {
-            "name": "symfony/console",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/console.git",
-                "reference": "16bb1cb86df43c90931df65f529e7ebd79636750"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/16bb1cb86df43c90931df65f529e7ebd79636750",
-                "reference": "16bb1cb86df43c90931df65f529e7ebd79636750",
-=======
             "time": "2016-03-18 20:34:03"
         },
         {
@@ -1687,7 +1478,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/PhenX/php-font-lib/zipball/c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82",
                 "reference": "c30c7fc00a6b0d863e9bb4c5d5dd015298b2dc82",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "type": "library",
@@ -1706,24 +1496,6 @@
                     "email": "fabien.menager@gmail.com"
                 }
             ],
-<<<<<<< Updated upstream
-            "description": "Symfony Console Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-11-18 09:54:26"
-        },
-        {
-            "name": "symfony/css-selector",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/css-selector.git",
-                "reference": "abb47717fb88aebd9437da2fc8bb01a50a36679f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/abb47717fb88aebd9437da2fc8bb01a50a36679f",
-                "reference": "abb47717fb88aebd9437da2fc8bb01a50a36679f",
-=======
             "description": "A library to read, parse, export and make subsets of different types of font files.",
             "homepage": "https://github.com/PhenX/php-font-lib",
             "time": "2014-02-01 15:22:28"
@@ -1740,7 +1512,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/pingpong-labs/generators/zipball/08391dff4ca7223fa07bffe9a4f14764e3a116e1",
                 "reference": "08391dff4ca7223fa07bffe9a4f14764e3a116e1",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -1770,24 +1541,6 @@
                     "email": "pingpong.labs@gmail.com"
                 }
             ],
-<<<<<<< Updated upstream
-            "description": "Symfony CssSelector Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-10-30 20:10:21"
-        },
-        {
-            "name": "symfony/debug",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/debug.git",
-                "reference": "0dbc119596f4afc82d9b2eb2a7e6a4af1ee763fa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/0dbc119596f4afc82d9b2eb2a7e6a4af1ee763fa",
-                "reference": "0dbc119596f4afc82d9b2eb2a7e6a4af1ee763fa",
-=======
             "description": "Laravel Generators",
             "keywords": [
                 "generators",
@@ -1808,7 +1561,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/pingpong-labs/modules/zipball/f10f5ad2c32f873d98e9669cf471a314d078da09",
                 "reference": "f10f5ad2c32f873d98e9669cf471a314d078da09",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -1838,24 +1590,6 @@
                     "email": "pingpong.labs@gmail.com"
                 }
             ],
-<<<<<<< Updated upstream
-            "description": "Symfony Debug Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-10-30 20:10:21"
-        },
-        {
-            "name": "symfony/dom-crawler",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "b33593cbfe1d81b50d48353f338aca76a08658d8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/b33593cbfe1d81b50d48353f338aca76a08658d8",
-                "reference": "b33593cbfe1d81b50d48353f338aca76a08658d8",
-=======
             "description": "Laravel Modules",
             "keywords": [
                 "hmvc",
@@ -1878,7 +1612,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/pingpong-labs/support/zipball/3f8054be7811ba837d2917d7c58933dcede0dfe3",
                 "reference": "3f8054be7811ba837d2917d7c58933dcede0dfe3",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -1906,24 +1639,6 @@
                     "email": "pingpong.labs@gmail.com"
                 }
             ],
-<<<<<<< Updated upstream
-            "description": "Symfony DomCrawler Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-11-02 20:20:53"
-        },
-        {
-            "name": "symfony/event-dispatcher",
-            "version": "v2.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "a5eb815363c0388e83247e7e9853e5dbc14999cc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a5eb815363c0388e83247e7e9853e5dbc14999cc",
-                "reference": "a5eb815363c0388e83247e7e9853e5dbc14999cc",
-=======
             "description": "Support Component of Pingpong Sky Package",
             "time": "2015-08-07 09:18:50"
         },
@@ -1939,7 +1654,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
                 "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "type": "library",
@@ -1958,24 +1672,6 @@
                     "homepage": "http://www.php-fig.org/"
                 }
             ],
-<<<<<<< Updated upstream
-            "description": "Symfony EventDispatcher Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-10-30 20:15:42"
-        },
-        {
-            "name": "symfony/finder",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/finder.git",
-                "reference": "a06a0c0ff7db3736a50d530c908cca547bf13da9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/a06a0c0ff7db3736a50d530c908cca547bf13da9",
-                "reference": "a06a0c0ff7db3736a50d530c908cca547bf13da9",
-=======
             "description": "Common interface for logging libraries",
             "keywords": [
                 "log",
@@ -1996,7 +1692,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/bobthecow/psysh/zipball/e64e10b20f8d229cac76399e1f3edddb57a0f280",
                 "reference": "e64e10b20f8d229cac76399e1f3edddb57a0f280",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -2047,24 +1742,6 @@
                     "homepage": "http://justinhileman.com"
                 }
             ],
-<<<<<<< Updated upstream
-            "description": "Symfony Finder Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-10-30 20:10:21"
-        },
-        {
-            "name": "symfony/http-foundation",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/http-foundation.git",
-                "reference": "e83a3d105ddaf5a113e803c904fdec552d1f1c35"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-foundation/zipball/e83a3d105ddaf5a113e803c904fdec552d1f1c35",
-                "reference": "e83a3d105ddaf5a113e803c904fdec552d1f1c35",
-=======
             "description": "An interactive shell for modern PHP.",
             "homepage": "http://psysh.org",
             "keywords": [
@@ -2087,7 +1764,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d8db871a54619458a805229a057ea2af33c753e8",
                 "reference": "d8db871a54619458a805229a057ea2af33c753e8",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -2120,24 +1796,6 @@
                     "email": "fabien@symfony.com"
                 }
             ],
-<<<<<<< Updated upstream
-            "description": "Symfony HttpFoundation Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-11-20 17:41:18"
-        },
-        {
-            "name": "symfony/http-kernel",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "5570de31e8fbc03777a8c61eb24f9b626e5e5941"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/5570de31e8fbc03777a8c61eb24f9b626e5e5941",
-                "reference": "5570de31e8fbc03777a8c61eb24f9b626e5e5941",
-=======
             "description": "Swiftmailer, free feature-rich PHP mailer",
             "homepage": "http://swiftmailer.org",
             "keywords": [
@@ -2159,7 +1817,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/console/zipball/dfb9d26a4dd62fc9389c42196cf4a087400948b8",
                 "reference": "dfb9d26a4dd62fc9389c42196cf4a087400948b8",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -2205,22 +1862,6 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-<<<<<<< Updated upstream
-            "time": "2015-11-23 11:57:49"
-        },
-        {
-            "name": "symfony/polyfill-php56",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php56.git",
-                "reference": "a6bd4770a6967517e6610529e14afaa3111094a3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/a6bd4770a6967517e6610529e14afaa3111094a3",
-                "reference": "a6bd4770a6967517e6610529e14afaa3111094a3",
-=======
             "time": "2016-04-20 06:32:07"
         },
         {
@@ -2235,7 +1876,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/css-selector/zipball/b6e5e9087ed7affbd4c38948da8f93513a87de43",
                 "reference": "b6e5e9087ed7affbd4c38948da8f93513a87de43",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -2244,11 +1884,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< Updated upstream
-                    "dev-master": "1.0-dev"
-=======
                     "dev-master": "2.7-dev"
->>>>>>> Stashed changes
                 }
             },
             "autoload": {
@@ -2269,61 +1905,8 @@
                     "email": "jeanfrancois.simon@sensiolabs.com"
                 },
                 {
-<<<<<<< Updated upstream
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 5.6+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2015-11-04 20:28:58"
-        },
-        {
-            "name": "symfony/polyfill-util",
-            "version": "v1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-util.git",
-                "reference": "4271c55cbc0a77b2641f861b978123e46b3da969"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/4271c55cbc0a77b2641f861b978123e46b3da969",
-                "reference": "4271c55cbc0a77b2641f861b978123e46b3da969",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Util\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-=======
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
->>>>>>> Stashed changes
                 },
                 {
                     "name": "Symfony Community",
@@ -2332,28 +1915,6 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-<<<<<<< Updated upstream
-            "keywords": [
-                "compat",
-                "compatibility",
-                "polyfill",
-                "shim"
-            ],
-            "time": "2015-11-04 20:28:58"
-        },
-        {
-            "name": "symfony/process",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/process.git",
-                "reference": "f6290983c8725d0afa29bdc3e5295879de3e58f5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/f6290983c8725d0afa29bdc3e5295879de3e58f5",
-                "reference": "f6290983c8725d0afa29bdc3e5295879de3e58f5",
-=======
             "time": "2016-03-04 07:52:28"
         },
         {
@@ -2368,7 +1929,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/debug/zipball/3b97c83b471d49c3d1187d67b501d1e703ee3928",
                 "reference": "3b97c83b471d49c3d1187d67b501d1e703ee3928",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -2412,22 +1972,6 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-<<<<<<< Updated upstream
-            "time": "2015-11-19 16:11:24"
-        },
-        {
-            "name": "symfony/routing",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/routing.git",
-                "reference": "7450f6196711b124fb8b04a12286d01a0401ddfe"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/routing/zipball/7450f6196711b124fb8b04a12286d01a0401ddfe",
-                "reference": "7450f6196711b124fb8b04a12286d01a0401ddfe",
-=======
             "time": "2016-03-30 09:14:15"
         },
         {
@@ -2442,7 +1986,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/3a7690c655283354b698ac380fe7d08fdbba03a1",
                 "reference": "3a7690c655283354b698ac380fe7d08fdbba03a1",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -2484,28 +2027,6 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-<<<<<<< Updated upstream
-            "keywords": [
-                "router",
-                "routing",
-                "uri",
-                "url"
-            ],
-            "time": "2015-11-18 13:41:01"
-        },
-        {
-            "name": "symfony/translation",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/translation.git",
-                "reference": "e4ecb9c3ba1304eaf24de15c2d7a428101c1982f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/e4ecb9c3ba1304eaf24de15c2d7a428101c1982f",
-                "reference": "e4ecb9c3ba1304eaf24de15c2d7a428101c1982f",
-=======
             "time": "2016-04-09 10:56:56"
         },
         {
@@ -2520,7 +2041,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/a158f13992a3147d466af7a23b564ac719a4ddd8",
                 "reference": "a158f13992a3147d466af7a23b564ac719a4ddd8",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -2567,22 +2087,6 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-<<<<<<< Updated upstream
-            "time": "2015-11-18 13:41:01"
-        },
-        {
-            "name": "symfony/var-dumper",
-            "version": "v2.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "72bcb27411780eaee9469729aace73c0d46fb2b8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/72bcb27411780eaee9469729aace73c0d46fb2b8",
-                "reference": "72bcb27411780eaee9469729aace73c0d46fb2b8",
-=======
             "time": "2016-05-03 18:59:18"
         },
         {
@@ -2597,7 +2101,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/finder/zipball/0bacc7c9fc1905cfce20212633013a5b300dce52",
                 "reference": "0bacc7c9fc1905cfce20212633013a5b300dce52",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -2633,15 +2136,7 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-<<<<<<< Updated upstream
-            "keywords": [
-                "debug",
-                "dump"
-            ],
-            "time": "2015-11-18 13:41:01"
-=======
             "time": "2016-03-10 10:49:29"
->>>>>>> Stashed changes
         },
         {
             "name": "symfony/http-foundation",
@@ -2841,31 +2336,6 @@
             "time": "2016-05-18 14:26:46"
         },
         {
-<<<<<<< Updated upstream
-            "name": "doctrine/cache",
-            "version": "v1.5.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/cache.git",
-                "reference": "47cdc76ceb95cc591d9c79a36dc3794975b5d136"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/47cdc76ceb95cc591d9c79a36dc3794975b5d136",
-                "reference": "47cdc76ceb95cc591d9c79a36dc3794975b5d136",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2"
-            },
-            "conflict": {
-                "doctrine/common": ">2.2,<2.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": ">=3.7",
-                "predis/predis": "~1.0",
-                "satooshi/php-coveralls": "~0.6"
-=======
             "name": "symfony/polyfill-php56",
             "version": "v1.2.0",
             "source": {
@@ -2882,16 +2352,11 @@
             "require": {
                 "php": ">=5.3.3",
                 "symfony/polyfill-util": "~1.0"
->>>>>>> Stashed changes
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< Updated upstream
-                    "dev-master": "1.5.x-dev"
-=======
                     "dev-master": "1.2-dev"
->>>>>>> Stashed changes
                 }
             },
             "autoload": {
@@ -2924,11 +2389,7 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< Updated upstream
-            "time": "2015-12-19 05:03:47"
-=======
             "time": "2016-05-18 14:26:46"
->>>>>>> Stashed changes
         },
         {
             "name": "symfony/polyfill-util",
@@ -2983,31 +2444,6 @@
             "time": "2016-05-18 14:26:46"
         },
         {
-<<<<<<< Updated upstream
-            "name": "doctrine/common",
-            "version": "v2.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/common.git",
-                "reference": "311001fd9865a4d0d59efff4eac6d7dcb3f5270c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/311001fd9865a4d0d59efff4eac6d7dcb3f5270c",
-                "reference": "311001fd9865a4d0d59efff4eac6d7dcb3f5270c",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/annotations": "1.*",
-                "doctrine/cache": "1.*",
-                "doctrine/collections": "1.*",
-                "doctrine/inflector": "1.*",
-                "doctrine/lexer": "1.*",
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~3.7"
-=======
             "name": "symfony/process",
             "version": "v2.7.13",
             "source": {
@@ -3023,20 +2459,10 @@
             },
             "require": {
                 "php": ">=5.3.9"
->>>>>>> Stashed changes
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< Updated upstream
-                    "dev-master": "2.5.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Doctrine\\Common\\": "lib/"
-                }
-=======
                     "dev-master": "2.7-dev"
                 }
             },
@@ -3047,7 +2473,6 @@
                 "exclude-from-classmap": [
                     "/Tests/"
                 ]
->>>>>>> Stashed changes
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -3063,36 +2488,6 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-<<<<<<< Updated upstream
-            "description": "Common Library for Doctrine projects",
-            "homepage": "http://www.doctrine-project.org",
-            "keywords": [
-                "annotations",
-                "collections",
-                "eventmanager",
-                "persistence",
-                "spl"
-            ],
-            "time": "2015-12-04 12:49:42"
-        },
-        {
-            "name": "doctrine/dbal",
-            "version": "v2.5.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/dbal.git",
-                "reference": "01dbcbc5cd0a913d751418e635434a18a2f2a75c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/01dbcbc5cd0a913d751418e635434a18a2f2a75c",
-                "reference": "01dbcbc5cd0a913d751418e635434a18a2f2a75c",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/common": ">=2.4,<2.6-dev",
-                "php": ">=5.3.2"
-=======
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
             "time": "2016-04-12 11:52:58"
@@ -3116,7 +2511,6 @@
             },
             "conflict": {
                 "symfony/config": "<2.7"
->>>>>>> Stashed changes
             },
             "require-dev": {
                 "doctrine/annotations": "~1.0",
@@ -3170,11 +2564,7 @@
                 "uri",
                 "url"
             ],
-<<<<<<< Updated upstream
-            "time": "2015-09-16 16:29:33"
-=======
             "time": "2016-04-28 10:50:58"
->>>>>>> Stashed changes
         },
         {
             "name": "symfony/translation",
@@ -3710,18 +3100,6 @@
         },
         {
             "name": "phpspec/phpspec",
-<<<<<<< Updated upstream
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpspec/phpspec.git",
-                "reference": "1d3938e6d9ffb1bd4805ea8ddac62ea48767f358"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/phpspec/zipball/1d3938e6d9ffb1bd4805ea8ddac62ea48767f358",
-                "reference": "1d3938e6d9ffb1bd4805ea8ddac62ea48767f358",
-=======
             "version": "2.5.0",
             "source": {
                 "type": "git",
@@ -3732,7 +3110,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpspec/phpspec/zipball/385ecb015e97c13818074f1517928b24d4a26067",
                 "reference": "385ecb015e97c13818074f1517928b24d4a26067",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -3797,11 +3174,7 @@
                 "testing",
                 "tests"
             ],
-<<<<<<< Updated upstream
-            "time": "2015-11-29 02:03:49"
-=======
             "time": "2016-03-20 20:34:32"
->>>>>>> Stashed changes
         },
         {
             "name": "phpspec/prophecy",
@@ -4237,151 +3610,6 @@
             "time": "2015-10-02 06:51:40"
         },
         {
-<<<<<<< Updated upstream
-            "name": "pingpong/generators",
-            "version": "v2.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pingpong-labs/generators.git",
-                "reference": "bbf756b633da361f99af52bcf5620f671c86e3a1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pingpong-labs/generators/zipball/bbf756b633da361f99af52bcf5620f671c86e3a1",
-                "reference": "bbf756b633da361f99af52bcf5620f671c86e3a1",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/dbal": "~2.5",
-                "illuminate/filesystem": "5.1.*",
-                "illuminate/support": "5.1.*",
-                "php": ">=5.4.0",
-                "pingpong/support": "2.1.*"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Pingpong\\Generators\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Pingpong Labs",
-                    "email": "pingpong.labs@gmail.com"
-                }
-            ],
-            "description": "Laravel Generators",
-            "keywords": [
-                "generators",
-                "laravel",
-                "pingpong"
-            ],
-            "time": "2015-07-02 04:19:47"
-        },
-        {
-            "name": "pingpong/modules",
-            "version": "v2.1.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pingpong-labs/modules.git",
-                "reference": "cc2b4bdcd528f992d0ed27369f0c4b6523bf988a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pingpong-labs/modules/zipball/cc2b4bdcd528f992d0ed27369f0c4b6523bf988a",
-                "reference": "cc2b4bdcd528f992d0ed27369f0c4b6523bf988a",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "5.1.*",
-                "laravelcollective/html": "~5.0",
-                "php": ">=5.4.0",
-                "pingpong/generators": "2.1.*",
-                "pingpong/support": "2.1.*"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Pingpong\\Modules\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Pingpong Labs",
-                    "email": "pingpong.labs@gmail.com"
-                }
-            ],
-            "description": "Laravel Modules",
-            "keywords": [
-                "hmvc",
-                "laravel",
-                "module",
-                "modules",
-                "pingpong"
-            ],
-            "time": "2015-11-06 06:53:58"
-        },
-        {
-            "name": "pingpong/support",
-            "version": "v2.1.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pingpong-labs/support.git",
-                "reference": "3f8054be7811ba837d2917d7c58933dcede0dfe3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pingpong-labs/support/zipball/3f8054be7811ba837d2917d7c58933dcede0dfe3",
-                "reference": "3f8054be7811ba837d2917d7c58933dcede0dfe3",
-                "shasum": ""
-            },
-            "require": {
-                "erusev/parsedown-extra": "0.7.*",
-                "illuminate/filesystem": "5.1.*",
-                "illuminate/support": "5.1.*",
-                "php": ">=5.4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Pingpong\\Support\\": ""
-                },
-                "files": [
-                    "helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Pingpong Labs",
-                    "email": "pingpong.labs@gmail.com"
-                }
-            ],
-            "description": "Support Component of Pingpong Sky Package",
-            "time": "2015-08-07 09:18:50"
-        },
-        {
-=======
->>>>>>> Stashed changes
             "name": "sebastian/comparator",
             "version": "1.2.0",
             "source": {
@@ -4754,18 +3982,6 @@
         },
         {
             "name": "symfony/yaml",
-<<<<<<< Updated upstream
-            "version": "v3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002",
-                "reference": "177a015cb0e19ff4a49e0e2e2c5fc1c1bee07002",
-=======
             "version": "v3.0.6",
             "source": {
                 "type": "git",
@@ -4776,7 +3992,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/yaml/zipball/0047c8366744a16de7516622c5b7355336afae96",
                 "reference": "0047c8366744a16de7516622c5b7355336afae96",
->>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -4812,78 +4027,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-<<<<<<< Updated upstream
-            "time": "2015-11-30 12:36:17"
-        },
-        {
-            "name": "zizaco/entrust",
-            "version": "dev-laravel-5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Zizaco/entrust.git",
-                "reference": "be28aa634c44551ae5187894c903094a8ce8baee"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/be28aa634c44551ae5187894c903094a8ce8baee",
-                "reference": "be28aa634c44551ae5187894c903094a8ce8baee",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/console": "~5.0",
-                "illuminate/support": "~5.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "illuminate/database": "~5.0",
-                "mockery/mockery": "dev-master",
-                "phpunit/phpunit": "~4.1",
-                "sami/sami": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/commands"
-                ],
-                "psr-4": {
-                    "Zizaco\\Entrust\\": "src/Entrust/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Andrew Elkins",
-                    "homepage": "http://andrewelkins.com"
-                },
-                {
-                    "name": "Zizaco Zizuini",
-                    "email": "zizaco@gmail.com"
-                },
-                {
-                    "name": "Ben Batschelet",
-                    "homepage": "http://github.com/bbatsche"
-                },
-                {
-                    "name": "Michele Angioni",
-                    "email": "michele.angioni@gmail.com"
-                }
-            ],
-            "description": "This package provides a flexible way to add Role-based Permissions to Laravel",
-            "keywords": [
-                "acl",
-                "auth",
-                "illuminate",
-                "laravel",
-                "permission",
-                "roles"
-            ],
-            "time": "2015-11-12 17:38:37"
-=======
             "time": "2016-03-04 07:55:57"
->>>>>>> Stashed changes
         }
     ],
     "aliases": [],
