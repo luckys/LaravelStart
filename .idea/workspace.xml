@@ -2,28 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc3a3661-8fe9-47ce-af64-c5de74b0bf2f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/Auth/Resources/views/emails/welcome.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/Auth/Traits/UserHelper.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/Dashboard/Resources/views/dashboard_default.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/storage/testing.sqlite" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/modules/Auth/Http/Controllers/AuthController.php" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/modules/Auth/Http/Controllers/UserController.php" afterPath="$PROJECT_DIR$/modules/Auth/Http/Controllers/UserController1.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/database.php" afterPath="$PROJECT_DIR$/config/database.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Auth/Database/Migrations/2015_06_01_164657_auth_setup_tables.php" afterPath="$PROJECT_DIR$/modules/Auth/Database/Migrations/2015_06_01_164657_auth_setup_tables.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Auth/Database/Seeders/AuthTableSeeder.php" afterPath="$PROJECT_DIR$/modules/Auth/Database/Seeders/AuthTableSeeder.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Auth/Entities/User.php" afterPath="$PROJECT_DIR$/modules/Auth/Entities/User.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Auth/Http/Requests/UserRequest.php" afterPath="$PROJECT_DIR$/modules/Auth/Http/Requests/UserRequest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Auth/Http/routes.php" afterPath="$PROJECT_DIR$/modules/Auth/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Auth/Resources/lang/es/ui.php" afterPath="$PROJECT_DIR$/modules/Auth/Resources/lang/es/ui.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Auth/Resources/views/login.blade.php" afterPath="$PROJECT_DIR$/modules/Auth/Resources/views/login.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Auth/Resources/views/user/form.blade.php" afterPath="$PROJECT_DIR$/modules/Auth/Resources/views/user/form.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Auth/Resources/views/user/index.blade.php" afterPath="$PROJECT_DIR$/modules/Auth/Resources/views/user/index.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/Dashboard/Http/Controllers/DashboardController.php" afterPath="$PROJECT_DIR$/modules/Dashboard/Http/Controllers/DashboardController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpunit.xml" afterPath="$PROJECT_DIR$/phpunit.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" afterPath="$PROJECT_DIR$/resources/views/partials/sidebar.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/Auth/Http/Controllers/UserController.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/modules/Auth/Http/Controllers/UserController1.php" afterPath="" />
     </list>
     <ignored path="LaravelStart.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -44,32 +25,7 @@
     <favorites_list name="LaravelStart" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UserController1.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/modules/Auth/Http/Controllers/UserController1.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-666">
-              <caret line="74" column="5" selection-start-line="66" selection-start-column="4" selection-end-line="74" selection-end-column="5" />
-              <folding>
-                <element signature="e#48#76#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/modules/Auth/Http/Controllers/UserController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="65">
-              <caret line="78" column="131" selection-start-line="78" selection-start-column="131" selection-end-line="78" selection-end-column="131" />
-              <folding>
-                <element signature="e#48#79#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -300,36 +256,6 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="user" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LaravelStart" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LaravelStart" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="modules" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Auth" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Resources" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="lang" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -508,19 +434,19 @@
       <workItem from="1464041296984" duration="190000" />
       <workItem from="1464041508446" duration="3163000" />
       <workItem from="1464097933838" duration="25000" />
-      <workItem from="1464097983847" duration="10984000" />
+      <workItem from="1464097983847" duration="11214000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35238000" />
+    <option name="totallyTimeSpent" value="35468000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="743" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2840909" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2840909" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -904,16 +830,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/modules/Auth/Http/Controllers/UserController1.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-666">
-          <caret line="74" column="5" selection-start-line="66" selection-start-column="4" selection-end-line="74" selection-end-column="5" />
-          <folding>
-            <element signature="e#48#76#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/Auth/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="65">
@@ -921,6 +837,14 @@
           <folding>
             <element signature="e#48#79#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/modules/Auth/Http/Controllers/UserController1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-666">
+          <caret line="74" column="5" selection-start-line="66" selection-start-column="4" selection-end-line="74" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
