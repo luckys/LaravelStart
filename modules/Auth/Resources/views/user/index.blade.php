@@ -33,6 +33,7 @@
                                     <th>{{ trans('auth::ui.user.lastname') }}</th>
                                     <th>{{ trans('auth::ui.user.username') }}</th>
                                     <th>{{ trans('auth::ui.user.email') }}</th>
+                                    <th>{{ trans('auth::ui.user.account') }}</th>
                                     <th>{{ trans('auth::ui.role.names') }}</th>
                                     @if(Auth::user()->can(['update-users', 'delete-users']))
                                     <th>{{ trans('auth::ui.user.operation_label') }}</th>
@@ -47,6 +48,7 @@
                                         <td>{{ $user->lastname }}</td>
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->email }}</td>
+                                        <td>{!! $user->account !!}</td>
                                         <td><ul>
                                                 @foreach($user->roles as $role)
                                                 <li>
@@ -80,6 +82,7 @@
                                     <th>{{ trans('auth::ui.user.lastname') }}</th>
                                     <th>{{ trans('auth::ui.user.username') }}</th>
                                     <th>{{ trans('auth::ui.user.email') }}</th>
+                                    <th>{{ trans('auth::ui.user.account') }}</th>
                                     <th>{{ trans('auth::ui.role.names') }}</th>
                                     @if(Auth::user()->can(['update-users', 'delete-users']))
                                         <th>{{ trans('auth::ui.user.operation_label') }}</th>

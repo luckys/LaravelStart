@@ -17,15 +17,6 @@
 </div>
 
 <div class="form-group">
-    <label  class="col-lg-2 col-sm-2 control-label">{{ trans('auth::ui.user.username') }}</label>
-    <div class="col-lg-8">
-
-        {!! Form::text('username', null, ['class' => 'form-control']) !!}
-
-    </div>
-</div>
-
-<div class="form-group">
     <label  class="col-lg-2 col-sm-2 control-label">{{ trans('auth::ui.user.email') }}</label>
     <div class="col-lg-8">
 
@@ -34,23 +25,16 @@
     </div>
 </div>
 
-<div class="form-group">
-    <label  class="col-lg-2 col-sm-2 control-label">{{ trans('auth::ui.user.password') }}</label>
-    <div class="col-lg-8">
+@if(Request::is('auth/user/*/edit'))
+    <div class="form-group">
+        <label  class="col-lg-2 col-sm-2 control-label">{{ trans('auth::ui.user.account_activated') }}</label>
+        <div class="col-lg-8 checkbox">
 
-        {!! Form::password('password', ['class' => 'form-control']) !!}
+            {!! Form::checkbox('activated') !!}
 
+        </div>
     </div>
-</div>
-
-<div class="form-group">
-    <label class="col-lg-2 col-sm-2 control-label">{{ trans('auth::ui.user.password_confirmation') }}</label>
-    <div class="col-lg-8">
-
-        {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
-
-    </div>
-</div>
+@endif
 
 <div class="form-group">
     <label  class="col-lg-2 col-sm-2 control-label">{{ trans('auth::ui.role.names') }}</label>

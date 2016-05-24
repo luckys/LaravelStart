@@ -12,14 +12,20 @@
         <ul class="nav nav-pills nav-stacked custom-nav">
             @if(Auth::check())
             <li class="active"><a href="{{ url('/dashboard') }}"><i class="fa fa-home"></i> <span>{{ trans('ui.sidebar.dashboard') }}</span></a></li>
-            @endif
 
-            @if(Auth::check() && Auth::user()->hasRole('admin'))
                 <li class="menu-list"><a href=""><i class="fa fa-user"></i> <span>{{ trans('ui.sidebar.admin_users') }}</span></a>
                     <ul class="sub-menu-list">
-                        <li><a href="{{ url('auth/user') }}"> <i class="fa fa-male"></i><span>{{ trans('ui.sidebar.users') }}</span></a></li>
-                        <li><a href="{{ url('auth/role') }}"> <i class="fa fa-legal"></i><span>{{ trans('ui.sidebar.roles') }}</span></a></li>
-                        <li><a href="{{ url('auth/permission') }}"><i class="fa fa-key"></i> <span>{{ trans('ui.sidebar.permissions') }}</span></a></li>
+                        @permission(['read-users', 'create-users', 'update-users', 'delete-users'])
+                            <li><a href="{{ url('auth/user') }}"> <i class="fa fa-male"></i><span>{{ trans('ui.sidebar.users') }}</span></a></li>
+                        @endpermission
+
+                        @permission(['read-roles', 'create-roles', 'update-roles', 'delete-roles'])
+                            <li><a href="{{ url('auth/role') }}"> <i class="fa fa-legal"></i><span>{{ trans('ui.sidebar.roles') }}</span></a></li>
+                        @endpermission
+
+                        @permission(['read-permissions', 'create-permissions', 'update-permissions', 'delete-permissions'])
+                            <li><a href="{{ url('auth/permission') }}"><i class="fa fa-key"></i> <span>{{ trans('ui.sidebar.permissions') }}</span></a></li>
+                        @endpermission
                     </ul>
                 </li>
             @endif

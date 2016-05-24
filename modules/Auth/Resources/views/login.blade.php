@@ -15,13 +15,11 @@
 
                 <input type="password" class="form-control" name="password" placeholder={{ trans('auth::ui.login.password') }}>
 
+                <input type="checkbox" value="remember-me" name="remember"> {{ trans('auth::ui.login.rememberme') }}
+
                 <button class="btn btn-lg btn-login btn-block" type="submit">
                     <i class="fa fa-check"></i>
                 </button>
-
-                <label class="checkbox">
-                    <input type="checkbox" value="remember-me" name="remember"> {{ trans('auth::ui.login.rememberme') }}
-                </label>
 
                 @include('errors.form_error')
             </div>

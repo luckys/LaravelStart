@@ -19,6 +19,8 @@ class DashboardController extends Controller {
 
 			return view('dashboard::dashboard_admin', compact('data'));
 
+		} else {
+            return view('dashboard::dashboard_default');
 		}
 	}
 }

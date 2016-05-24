@@ -48,6 +48,7 @@ return [
         'password_new'              =>  'Contraseña Nueva',
         'password_old'              =>  'Contraseña Anterior',
         'name_label'            =>  'Usuario',
+        'account'               =>  'Cuenta',
         'change_password'            =>  'Cambiar Contraseña',
         'operation_label'       =>  'Operaciones',
         'new_user'           =>  'Nuevo Usuario',
@@ -55,6 +56,8 @@ return [
         'button_update'         =>  'Editar',
         'button_delete'         =>  'Eliminar',
         'button_add'            =>  'Agregar',
+        'account_activated'     =>  'Activada',
+        'account_unactivated'     =>  'Desactivada',
         'message_change_password' =>  'La contraseña ha sido cambiada satisfactoriamente',
         'message_delete'        =>  'El usuario :name ha sido eliminado satisfactoriamente',
         'message_create'        =>  'El usuario :name ha sido creado satisfactoriamente',
@@ -67,6 +70,7 @@ return [
         'email'                 =>  'Correo',
         'username'              =>  'Usuario',
         'password'              =>  'Contraseña',
+        'logged_successfully'   =>  'Bienvenido: Has iniciado sesion correctamente',
         'credentials_error'     =>  'El :field o la contraseña no son correctos'
     ],
 

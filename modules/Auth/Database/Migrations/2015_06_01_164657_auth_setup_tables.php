@@ -37,6 +37,9 @@ class AuthSetupTables extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('avatar')->nullable();
+            $table->boolean('activated')->default(false);
+            $table->string('email_token')->nullable();
             $table->string('remember_token');
             $table->timestamps();
         });
