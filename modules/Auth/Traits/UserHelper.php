@@ -52,13 +52,13 @@ trait UserHelper
         $user->attachRoles($request->input('role_id'));
     }
 
-    private function sendEmail($user)
+    public function sendEmail(User $user)
     {
-        Mail::send('auth::emails.welcome', ['email' => $user], function ($m) use ($user) {
+        Mail::send('auth::emails.active-account', ['user' => $user], function ($m) use ($user) {
             $m->from('webmaster@laravelstart.app', 'LaravelStart');
 
-            $m->to($user->email, $user->fullname)
-                ->subject('Confirmacion de registro');
+            $m->to($user->email, $user->firstname)
+                ->subject('Activacion de la cuenta');
         });
     }
 

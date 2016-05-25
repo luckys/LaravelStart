@@ -2,6 +2,7 @@
 
 use Modules\Auth\Entities\Role;
 use Modules\Auth\Entities\User;
+use Modules\Auth\Events\UserWasRegistered;
 use Modules\Auth\Http\Requests\UserRequest;
 use Modules\Auth\Traits\UserHelper;
 use Pingpong\Modules\Routing\Controller;
@@ -44,6 +45,8 @@ class UserController extends Controller {
         if(auth()->user()->can('create-users')) {
 
             $user = $this->saveUser($request);
+
+            event(new UserWasRegistered($user));
 
             return redirect()->back()
                              ->with('message', trans('auth::ui.user.message_create', array('name' => $user->fullname)));
