@@ -57,7 +57,8 @@ return [
         'button_delete'         =>  'Eliminar',
         'button_add'            =>  'Agregar',
         'account_activated'     =>  'Activada',
-        'account_unactivated'     =>  'Desactivada',
+        'account_unactivated'   =>  'Desactivada',
+        'activate_account'      =>  'Activar Cuenta',
         'message_change_password' =>  'La contraseña ha sido cambiada satisfactoriamente',
         'message_delete'        =>  'El usuario :name ha sido eliminado satisfactoriamente',
         'message_create'        =>  'El usuario :name ha sido creado satisfactoriamente',
@@ -71,7 +72,7 @@ return [
         'username'              =>  'Usuario',
         'password'              =>  'Contraseña',
         'logged_successfully'   =>  'Bienvenido: Has iniciado sesion correctamente',
-        'credentials_error'     =>  'El :field o la contraseña no son correctos'
+        'credentials_error'     =>  'El :field o la contraseña no son correctos o la cuenta ha sido desactivada'
     ],
 
 ];

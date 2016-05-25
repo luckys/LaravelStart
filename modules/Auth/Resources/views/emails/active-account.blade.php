@@ -1,6 +1,17 @@
-<h3>Welcome to Scotch Queue Team</h3>
+@extends('auth::emails.layout.master')
 
-<p>This is the most patient team in the Scotch community because we like to wait for our turn</p>
-
-<p>This made our friends love us because we always give them time to do other simple tasks before
-    coming back to do ours</p>
+@section('content')
+    <div class="container">
+        <div class="view-email">
+            <h3>Estimado usuario {{ $user->fullname }}</h3>
+            <p>
+                Se ha registrado correctamente en el sistema, para activar su cuenta
+                y cambiar la contraseña por defecto, acceda a la siguiente dirección
+                pinchando aqui
+                <a class="btn btn-info" href="{{ url('auth/user/reset-password/'.$user->email_token) }}" role="button">
+                    {{ trans('auth::ui.user.activate_account') }}
+                </a>
+            </p>
+        </div>
+    </div>
+@endsection
