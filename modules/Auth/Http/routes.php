@@ -12,6 +12,8 @@ Route::group(['prefix' => '/', 'namespace' => 'Modules\Auth\Http\Controllers'], 
     Route::resource('auth/user', 'UserController');
     Route::get('/auth/user/reset-password/{token}', ['as' => 'user.reset-password', 'uses' => 'AuthController@getResetPassword']);
     Route::post('/auth/user/{user}/reset-password', ['as' => 'user.reset-password', 'uses' => 'AuthController@postResetPassword']);
+    Route::get('auth/user/profile', 'UserController@show');
     
     Route::post('/auth/user/change-password', ['as' => 'user.change-password', 'uses' => 'UserController@changePassword']);
+    Route::post('/auth/user/change-avatar', ['as' => 'user.change-avatar', 'uses' => 'UserController@changeAvatar']);
 });

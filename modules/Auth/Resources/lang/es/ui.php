@@ -59,6 +59,7 @@ return [
         'account_activated'     =>  'Activada',
         'account_unactivated'   =>  'Desactivada',
         'activate_account'      =>  'Activar Cuenta',
+        'change_image'      =>  'Cambiar Foto',
         'message_change_password' =>  'La contraseña ha sido cambiada satisfactoriamente',
         'message_delete'        =>  'El usuario :name ha sido eliminado satisfactoriamente',
         'message_create'        =>  'El usuario :name ha sido creado satisfactoriamente',

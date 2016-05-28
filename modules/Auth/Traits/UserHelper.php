@@ -62,4 +62,9 @@ trait UserHelper
         });
     }
 
+    public function pathImage()
+    {
+        return public_path().'/images/profiles/';
+    }
+
 }

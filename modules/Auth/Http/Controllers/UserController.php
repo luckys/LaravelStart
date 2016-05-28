@@ -1,11 +1,14 @@
 <?php namespace Modules\Auth\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Modules\Auth\Entities\Role;
 use Modules\Auth\Entities\User;
 use Modules\Auth\Events\UserWasRegistered;
 use Modules\Auth\Http\Requests\UserRequest;
 use Modules\Auth\Traits\UserHelper;
 use Pingpong\Modules\Routing\Controller;
+use Image;
+use File;
 
 class UserController extends Controller {
 
@@ -98,6 +101,43 @@ class UserController extends Controller {
         }
 
         return redirect('auth/logout');
+    }
+
+    public function show()
+    {
+        return view('auth::user.profile');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $this->validate($request, [
+            'password' => 'required|confirmed|min:6'
+        ]);
+
+        auth()->user()->password = bcrypt($request->password);
+
+        auth()->user()->save();
+
+        return redirect()->back()
+                         ->with('message', trans('auth::ui.user.message_change_password'));
+    }
+
+    public function changeAvatar(Request $request)
+    {
+        $fileName = $request->file('avatar');
+
+        if ($fileName->isValid()) {
+            auth()->user()->avatar = $fileName->getClientOriginalName();
+            auth()->user()->save();
+
+            $fileName->move($this->pathImage(), auth()->user()->avatar);
+            $imagen = Image::make($this->pathImage().auth()->user()->avatar);
+            $imagen->resize(128, 128);
+            $imagen->save($this->pathImage().auth()->user()->avatar);
+        }
+
+        return redirect()->back();
+
     }
 
 }
