@@ -1,3 +1,5 @@
+## DESCONTINUADO
+
 ## Nota: El repositorio `Pingpong Modules` fue descontinuado por lo que esta aplicación puede que no funcione correctamente en la version 1.0. Esto se corregirá en la versión 1.1 que se encuentra en fase de desarrollo junto con otras nuevas funcionalidades.
 ## El proyecto de `Pingpong Modules` lo está manteniendo el siguiente usuario: https://github.com/nWidart/laravel-modules
 
